@@ -1,0 +1,45 @@
+﻿@model List<Entidades.Entidades.Cliente>
+<partial name="_Navbar" />
+<div class="container mt-4">
+    <h2>Clientes</h2>
+    <div class="d-grid gap-2 mt-4">
+        <a href="/Cliente/NuevoCliente" class="btn btn-info">Crear nuevo cliente</a>
+    </div>
+    <div class="mt-4 mb-4">
+        <form method="get" asp-controller="Cliente" asp-action="Index" id="formCambio">
+            <div class="form-check form-switch">
+                @if (!string.IsNullOrEmpty(ViewBag.Incluir) && ViewBag.Incluir.Equals("on"))
+                {
+                    <input class="form-check-input" name="incluir" type="checkbox" id="incluir" checked>
+                }
+                else
+                {
+                    <input class="form-check-input" name="incluir" type="checkbox" id="incluir">
+                }
+                <label for="incluir" class="form-check-label">Incluir eliminados</label>
+            </div>
+        </form>
+    </div>
+    <table class="table table-hover mt-4" id="lista">
+        <thead>
+            <tr>
+                <th scope="col">Nombre</th>
+                <th scope="col">Número</th>
+                <th scope="col">Teléfono</th>
+                <th scope="col">Ver</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var cliente in Model)
+            {
+                <tr class="table-row">
+                    <td>@cliente.Nombre</td>
+                    <td>@cliente.Numero </td>
+                    <td>@cliente.Telefono </td>
+                    <td><a class="btn btn-info" href="/Cliente/Detalle/@cliente.IdCliente">Ver</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<script src="~/js/scripts.js"></script>

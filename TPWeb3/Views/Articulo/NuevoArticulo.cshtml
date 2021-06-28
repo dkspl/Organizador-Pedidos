@@ -1,0 +1,21 @@
+﻿@model Entidades.Entidades.Articulo
+<partial name="_Navbar" />
+<div class="container">
+    <h2 class="mt-4">Crear nuevo artículo</h2>
+    <form method="post" asp-controller="Articulo" asp-action="CrearArticulo">
+        <fieldset>
+            <div class="form-group">
+                <label asp-for="@Model.Codigo" class="form-label mt-4">Código</label>
+                <input asp-for="@Model.Codigo" class="form-control" placeholder="Código">
+                <span asp-validation-for="@Model.Codigo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.Descripcion" class="form-label mt-2">Descripción</label>
+                <input asp-for="@Model.Descripcion" class="form-control" placeholder="Descripción">
+                <span asp-validation-for="@Model.Descripcion" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-success mt-2">Crear artículo</button>
+        </fieldset>
+    </form>
+</div>
+

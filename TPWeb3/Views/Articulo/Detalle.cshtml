@@ -1,0 +1,30 @@
+﻿@model Entidades.Entidades.Articulo
+<partial name="_Navbar" />
+<div class="container">
+    <h2 class="mt-4">Artículo: <small class="text-muted">@Model.IdArticulo</small></h2>
+    <form method="post" asp-controller="Articulo" asp-action="EditarArticulo">
+        <input asp-for="@Model.IdArticulo" type="hidden" value="@Model.IdArticulo" />
+        <fieldset>
+            <div class="form-group">
+                <label asp-for="@Model.Codigo" class="form-label mt-4">Codigo</label>
+                <input asp-for="@Model.Codigo" class="form-control" placeholder="Codigo" value="@Model.Codigo">
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.Descripcion" class="form-label mt-2">Descripción</label>
+                <input asp-for="@Model.Descripcion" class="form-control" placeholder="Descripción" value="@Model.Descripcion">
+            </div>
+        </fieldset>
+        <div>
+            <a href="/Articulo/" class="btn btn-success mt-5 mr-3">Volver a Lista</a>
+            @if (Model.FechaBorrado == null)
+            {
+                <button type="submit" class="btn btn-success mt-5">Editar</button>
+
+                <button type="button" onclick="addIdTo('@Model.IdArticulo','articuloPorBorrar')" class="btn btn-outline-success mt-5 float-right" data-toggle="modal" data-target="#eliminar">
+                    Eliminar artículo
+                </button>
+                <partial name="_ModalArticulo" />
+            }
+        </div>
+    </form>
+</div>

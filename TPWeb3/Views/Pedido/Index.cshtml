@@ -1,0 +1,33 @@
+﻿@model List<Entidades.Entidades.Pedido>
+<partial name="_Navbar" />
+<script src="~/js/scripts.js"></script>
+<div class="container mt-4">
+    <h2>Pedidos</h2>
+    <div class="d-grid gap-2 mt-4">
+        <a href="/Pedido/NuevoPedido" class="btn btn-warning btn-block">Crear nuevo pedido</a>
+    </div>
+    <div class="mt-4 mb-4">
+    </div>
+    <table class="table table-hover mt-4" id="lista">
+        <thead>
+            <tr>
+                <th scope="col">Pedido</th>
+                <th scope="col">Estado</th>
+                <th scope="col">Últ. modificación</th>
+                <th scope="col">Ver</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var pedido in Model)
+            {
+                <tr class="table-row">
+                    <td>@pedido.IdClienteNavigation.Nombre - # @pedido.NroPedido</td>
+                    <td>@pedido.IdEstadoNavigation.Descripcion</td>
+                    <td>@pedido.FechaModificacion</td>
+                    <td><a class="btn btn-warning" href="/Pedido/Detalle/@pedido.IdPedido">Ver</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+

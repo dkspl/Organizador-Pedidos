@@ -1,0 +1,59 @@
+﻿@model Entidades.Entidades.Cliente
+<partial name="_Navbar" />
+<div class="container">
+    <h2 class="mt-4">Cliente: <small class="text-muted">@Model.Nombre</small></h2>
+    <form method="post" asp-controller="Cliente" asp-action="EditarCliente">
+        <input asp-for="@Model.IdCliente" type="hidden" value="@Model.IdCliente" />
+        <fieldset>
+            <div class="form-group">
+                <label asp-for="@Model.Nombre" class="form-label mt-4">Nombre</label>
+                <input asp-for="@Model.Nombre" class="form-control" placeholder="Nombre" value="@Model.Nombre">
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.Numero" class="form-label mt-2">Número</label>
+                <input asp-for="@Model.Numero" class="form-control" placeholder="Número" value="@Model.Numero">
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.Cuit" class="form-label mt-2">CUIT (opcional)</label>
+                <input asp-for="@Model.Cuit" class="form-control" placeholder="CUIT">
+                <span asp-validation-for="@Model.Cuit" class="text-danger" value="@Model.Cuit"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.Email" class="form-label mt-2">Email (opcional)</label>
+                <input asp-for="@Model.Email" class="form-control" placeholder="Email">
+                <span asp-validation-for="@Model.Email" class="text-danger" value="@Model.Email"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.Telefono" class="form-label mt-2">Teléfono (opcional)</label>
+                <input asp-for="@Model.Telefono" class="form-control" placeholder="Teléfono" value="@Model.Telefono">
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.Direccion" class="form-label mt-2">Dirección (opcional)</label>
+                <input asp-for="@Model.Direccion" class="form-control" placeholder="Dirección">
+                <span asp-validation-for="@Model.Direccion" class="text-danger" value="@Model.Direccion"></span>
+            </div>
+            <div class="form-group">
+                <label for="creacion" class="form-label mt-2">Fecha de creación:</label>
+                <span class="form-control" id="creacion">@Model.FechaCreacion</span>
+            </div>
+            <div class="form-group">
+                <label for="modificacion" class="form-label mt-2">Última vez modificado:</label>
+                <span class="form-control" id="modificacion">@Model.FechaModificacion</span>
+            </div>
+        </fieldset>
+        <div>
+            <a href="/Cliente/Index" class="btn btn-info mt-5 mr-3">Volver a Inicio</a>
+            @if (Model.FechaBorrado == null)
+            {
+                <button type="submit" class="btn btn-info mt-5">Editar</button>
+
+                <button type="button" onclick="addIdTo('@Model.IdCliente','clientePorBorrar')" class="btn btn-outline-info mt-5 float-right" data-toggle="modal" data-target="#eliminar">
+                    Eliminar cliente
+                </button>
+                <partial name="_ModalCliente" />
+            }
+        </div>
+    </form>
+</div>
+
+

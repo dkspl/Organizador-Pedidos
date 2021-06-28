@@ -1,0 +1,53 @@
+﻿@model Entidades.Entidades.Usuario
+<partial name="_Navbar" />
+<div class="container">
+
+    <h2 class="mt-4">Usuario: <small class="text-muted">@Model.Apellido, @Model.Nombre</small></h2>
+    <form method="post" asp-controller="Usuario" asp-action="EditarUsuario">
+        <input asp-for="@Model.IdUsuario" type="hidden" value="@Model.IdUsuario" />
+        <fieldset>
+            <div class="form-group">
+                <label asp-for="@Model.Nombre" class="form-label mt-4">Nombre</label>
+                <input asp-for="@Model.Nombre" class="form-control" placeholder="Nombre" value="@Model.Nombre">
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.Apellido" class="form-label mt-2">Apellido</label>
+                <input asp-for="@Model.Apellido" class="form-control" placeholder="Apellido" value="@Model.Apellido">
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.Email" class="form-label mt-2">Email</label>
+                <input asp-for="@Model.Email" class="form-control" placeholder="Email" value="@Model.Email">
+            </div>
+            <div class="form-group">
+                <label for="creacion" class="form-label mt-2">Fecha de creación:</label>
+                <span class="form-control" id="creacion">@Model.FechaCreacion</span>
+            </div>
+            <div class="form-group">
+                <label for="modificacion" class="form-label mt-2">Última vez modificado:</label>
+                <span class="form-control" id="modificacion">@Model.FechaModificacion</span>
+            </div>
+            <div class="form-check form-switch mt-4">
+                @if (Model.EsAdmin)
+                {
+                    <input asp-for="@Model.EsAdmin" class="form-check-input" type="checkbox" checked>
+                }
+                else
+                {
+                    <input asp-for="@Model.EsAdmin" class="form-check-input" type="checkbox">
+                }
+                <label asp-for="@Model.EsAdmin" class="form-check-label">¿Es administrador?</label>
+            </div>
+        </fieldset>
+        <div>
+            <a href="/Usuario/Index" class="btn btn-danger mt-5 mr-3">Volver a Inicio</a>
+            @if (Model.FechaBorrado == null)
+            {
+                <button type="submit" class="btn btn-danger mt-5">Editar</button>
+                <button type="button" onclick="addIdTo('@Model.IdUsuario','usuarioPorBorrar')" class="btn btn-outline-danger mt-5 float-right" data-toggle="modal" data-target="#eliminar">
+                    Eliminar usuario
+                </button>
+                <partial name="_ModalUsuario" />
+            }
+        </div>
+    </form>
+</div>

@@ -1,0 +1,47 @@
+﻿@model List<Entidades.Entidades.Usuario>
+<partial name="_Navbar" />
+
+<div class="container mt-4">
+    <h2>Usuarios</h2>
+    <div class="d-grid gap-2 mt-4">
+        <a href="/Usuario/NuevoUsuario" class="btn btn-danger">Crear nuevo usuario</a>
+    </div>
+    <div class="mt-4 mb-4">
+        <form method="get" asp-controller="Usuario" asp-action="Index" id="formCambio">
+            <div class="form-check form-switch">
+                @if (!string.IsNullOrEmpty(ViewBag.Incluir) && ViewBag.Incluir.Equals("on"))
+                {
+                    <input class="form-check-input" name="incluir" type="checkbox" id="incluir" checked>
+                }
+                else
+                {
+                    <input class="form-check-input" name="incluir" type="checkbox" id="incluir">
+                }
+                <label for="incluir" class="form-check-label">Incluir eliminados</label>
+            </div>
+        </form>
+    </div>
+    <table class="table table-hover mt-4" id="lista">
+        <thead>
+            <tr>
+                <th scope="col">Apellido</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Email</th>
+                <th scope="col">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var usuario in Model)
+            {
+                <tr class="table-row">
+                    <td>@usuario.Apellido</td>
+                    <td>@usuario.Nombre </td>
+                    <td>@usuario.Email</td>
+                    <td><a class="btn btn-danger" href="/Usuario/Detalle/@usuario.IdUsuario">Ver</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<script src="~/js/scripts.js"></script>
+

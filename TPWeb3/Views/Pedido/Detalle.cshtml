@@ -1,0 +1,85 @@
+﻿@model Entidades.Entidades.Pedido
+<partial name="_Navbar" />
+<script src="~/js/Scripts.js"></script>
+<div class="container">
+    <h2 class="mt-4">Pedido: @Model.IdPedido</h2>
+    <div class="input-group mt-4" id="inputArticulo">
+        <div class="input-group-prepend">
+            <span class="input-group-text">Articulo</span>
+        </div>
+        <select name="codArt" class="custom-select js-example-basic-single" id="codArt">
+            @foreach (var articulo in ViewBag.Articulos)
+            {
+                <option value="@articulo.IdArticulo">@articulo.Descripcion</option>
+            }
+        </select>
+        <div class="input-group-append">
+            <input type="number" class="form-control" placeholder="Cantidad" id="cantArt">
+            <button id="nuevoArticulo" class="btn btn-warning">Agregar artículo</button>
+        </div>
+
+    </div>
+    @if (!string.IsNullOrEmpty(ViewBag.ErrorArticulo))
+    {
+        <span class="text-danger">@ViewBag.ErrorArticulo</span>
+    }
+    <form method="post" asp-controller="Pedido" asp-action="EditarPedido">
+        <input asp-for="@Model.IdPedido" type="hidden" value="@Model.IdPedido" />
+        <fieldset>
+            <div class="input-group mt-4">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Cliente</span>
+                </div>
+                <select name="idCliente" class="form-select js-example-basic-single" id="idCliente">
+                    @foreach (var cliente in ViewBag.Clientes)
+                    {
+                        if (cliente.IdCliente == Model.IdCliente)
+                        {
+                            <option value="@cliente.IdCliente" selected>@cliente.IdCliente - @cliente.Nombre</option>
+                        }
+                        else
+                        {
+                            <option value="@cliente.IdCliente">@cliente.IdCliente - @cliente.Nombre</option>
+                        }
+                    }
+                </select>
+                @if (!string.IsNullOrEmpty(ViewBag.ErrorCliente))
+                {
+                    <span class="text-danger">@ViewBag.ErrorCliente</span>
+                }
+            </div>
+            <div class="container mt-4">
+                <table class="table table-hover mt-4">
+                    <thead>
+                        <tr>
+                            <th scope="col">Descripción</th>
+                            <th scope="col">Código</th>
+                            <th scope="col">Cantidad</th>
+                            <th scope="col">Ver</th>
+                        </tr>
+                    </thead>
+                    <tbody id="listaArticulos">
+                        @foreach (var articulo in Model.PedidoArticulos)
+                        {
+                            <tr class="table-row div-articulo" id="@articulo.IdArticulo">
+                                <td>@articulo.IdArticuloNavigation.Descripcion</td>
+                                <td>@articulo.IdArticulo</td>
+                                <td id="Cantidad_@articulo.IdArticulo">@articulo.Cantidad</td>
+                                <td><a target="_blank" class="btn btn-success" href="/Articulo/Detalle/@articulo.IdArticulo">Ver</a></td>
+                                <input type="hidden" id="Articulo_@articulo.IdArticulo" name="Articulos[@articulo.IdArticulo]" class="form-control articulo" value="@articulo.Cantidad">
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="input-group mt-4 mb-4">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Comentarios</span>
+                </div>
+                <textarea asp-for="@Model.Comentarios" class="form-control"></textarea>
+                <span asp-validation-for="@Model.Comentarios" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-warning mt-2">Editar pedido</button>
+        </fieldset>
+    </form>
+</div>
