@@ -51,7 +51,7 @@ namespace Servicios
             }
 
         }
-        public List<EstadoPedido> listarEstadosPedido()
+        public List<EstadoPedido> ListarEstadosPedido()
         {
             return Contexto.EstadoPedidos.ToList();
         }

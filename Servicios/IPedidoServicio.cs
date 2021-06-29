@@ -13,7 +13,7 @@ namespace Servicios
         List<Pedido> ListarPedidosConEliminados();
         int CrearPedido(Pedido pedido, Cliente cliente);
         Pedido BuscarPedido(int id);
-        List<EstadoPedido> listarEstadosPedido();
+        List<EstadoPedido> ListarEstadosPedido();
         void EditarPedido(Pedido pedido);
         List<PedidoArticulo> BuscarArticulosDeUnPedido(int id);
         List<PedidoArticulo> EditarArticulosDeUnPedido(List<PedidoArticulo> listaArticulos, int idPedido);

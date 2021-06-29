@@ -67,7 +67,7 @@ namespace TPWeb3.Controllers
                 ViewBag.Clientes = ClienteServicio.ListarClientes();
                 ViewBag.Articulos = ArticuloServicio.ListarArticulos();
                 ViewBag.ErrorArticulo = TempData["ErrorArticulo"];
-                ViewBag.EstadoPedido = PedidoServicio.listarEstadosPedido();
+                ViewBag.EstadoPedido = PedidoServicio.ListarEstadosPedido();
                 return View(pedidoEncontrado);
             }
             return RedirectToAction("Index");
@@ -91,13 +91,6 @@ namespace TPWeb3.Controllers
 
         public IActionResult TestDic()
         {
-            ViewBag.Articulos = ArticuloServicio.ListarArticulos();
-            return View();
-        }
-        [HttpPost]
-        public IActionResult TestDic(Dictionary<int, int> Articulos)
-        {
-            Dictionary<int, int> nuevoDiccionario = Articulos;
             ViewBag.Articulos = ArticuloServicio.ListarArticulos();
             return View();
         }
