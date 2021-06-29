@@ -33,7 +33,7 @@ namespace TPWeb3.Controllers
                 if (usuarioValidado != null)
                 {
                     HttpContext.Session.SetInt32("Usuario", usuarioValidado.IdUsuario);
-                    return Redirect("/Cliente");
+                    return Redirect("/Pedido");
                 }
                 ViewBag.error = "Email y/o password incorrectos.";
             }

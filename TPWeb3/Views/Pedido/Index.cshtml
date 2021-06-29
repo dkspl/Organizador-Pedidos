@@ -6,8 +6,57 @@
     <div class="d-grid gap-2 mt-4">
         <a href="/Pedido/NuevoPedido" class="btn btn-warning btn-block">Crear nuevo pedido</a>
     </div>
-    <div class="mt-4 mb-4">
-    </div>
+    <form method="get" asp-controller="Pedido" asp-action="Index">
+        <div class="mt-2 mb-4 row">
+            <div class="mt-4 col" id="inputFiltro">
+                <select name="cliente" class="custom-select js-example-basic-single" id="cliente">
+                    @foreach (var cliente in ViewBag.Clientes)
+                    {
+                        if (ViewBag.Cliente != null && cliente.IdCliente==ViewBag.Cliente)
+                        {
+                            <option value="@cliente.IdCliente" selected>@cliente.Nombre</option>
+                        }
+                        else
+                        {
+                            <option value="@cliente.IdCliente">@cliente.Nombre</option>
+                        }
+                    }
+                </select>
+
+            </div>
+            <div class="mt-4 col">
+                <select name="estado" class="custom-select js-example-basic-single" id="estado">
+                    @foreach (var estado in ViewBag.Estados)
+                    {
+                        if (ViewBag.Estado!=null && estado.IdEstadoPedido==ViewBag.Estado)
+                        {
+                            <option value="@estado.IdEstadoPedido" selected>@estado.Descripcion</option>
+                        }
+                        else
+                        {
+                            <option value="@estado.IdEstadoPedido">@estado.Descripcion</option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="mt-4 col-auto">
+                <div class="form-check form-switch">
+                    @if (!string.IsNullOrEmpty(ViewBag.Incluir) && ViewBag.Incluir.Equals("on"))
+                    {
+                        <input class="form-check-input" name="incluir" type="checkbox" id="incluir" checked>
+                    }
+                    else
+                    {
+                        <input class="form-check-input" name="incluir" type="checkbox" id="incluir">
+                    }
+                    <label for="incluir" class="form-check-label">Incluir eliminados</label>
+                </div>
+            </div>
+            <div class="mt-4 col-auto">
+                <button type="submit" class="btn btn-primary">Filtrar</button>
+            </div>
+        </div>
+    </form>
     <table class="table table-hover mt-4" id="lista">
         <thead>
             <tr>

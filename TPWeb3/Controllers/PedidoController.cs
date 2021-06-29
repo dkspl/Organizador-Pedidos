@@ -20,13 +20,19 @@ namespace TPWeb3.Controllers
             ArticuloServicio = new ArticuloServicio(contexto);
             ClienteServicio = new ClienteServicio(contexto);
         }
-        public IActionResult Index()
+        public IActionResult Index(int? cliente, int? estado, string incluir)
         {
-            return View(PedidoServicio.ListarPedidosAbiertos());
+            ViewBag.Clientes = ClienteServicio.ListarClientes();
+            ViewBag.Estados = PedidoServicio.ListarEstadosPedido();
+            ViewBag.Cliente = cliente;
+            ViewBag.Estado = estado;
+            ViewBag.Incluir = incluir;
+            return View(PedidoServicio.ListarPedidos(cliente, estado, incluir));
         }
         public IActionResult NuevoPedido()
         {
-            ViewBag.Clientes = ClienteServicio.ListarClientesSinPedidosActivos(PedidoServicio.ListarPedidosActivos());
+            ViewBag.Clientes = ClienteServicio.ListarClientesSinPedidosActivos
+                (PedidoServicio.ListarPedidosAbiertos(PedidoServicio.ListarTodosLosPedidos()));
             ViewBag.Articulos = ArticuloServicio.ListarArticulos();
             ViewBag.ErrorCliente = TempData["ErrorCliente"];
             ViewBag.ErrorArticulo = TempData["ErrorArticulo"];

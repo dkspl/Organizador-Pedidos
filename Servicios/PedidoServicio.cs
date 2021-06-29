@@ -17,24 +17,12 @@ namespace Servicios
             Contexto = dBContext;
         }
 
-        public List<Pedido> ListarPedidosActivos()
-        {
-            List<Pedido> listaPedidos = Contexto.Pedidos.
-                Where(u => u.IdEstadoNavigation.Descripcion.Equals("Abierto")).ToList();
-            return this.OrdenarPedidosPorCodigo(listaPedidos);
-        }
-
-        public List<Pedido> ListarPedidosConEliminados()
-        {
-            List<Pedido> listaPedidos = Contexto.Pedidos.ToList();
-            return this.OrdenarPedidosPorCodigo(listaPedidos);
-        }
         public int CrearPedido(Pedido pedido, Cliente cliente)
         {
             pedido.IdClienteNavigation = cliente;
             pedido.IdEstado = 1;
             pedido.FechaCreacion = DateTime.Now;
-            pedido.NroPedido = long.Parse(pedido.FechaCreacion.ToString("yMMddHHmm")+cliente.IdCliente.ToString());
+            pedido.NroPedido = long.Parse(pedido.FechaCreacion.ToString("yMMddHHmm") + cliente.IdCliente.ToString());
             Contexto.Pedidos.Add(pedido);
             int ingreso = Contexto.SaveChanges();
             return ingreso;
@@ -49,7 +37,6 @@ namespace Servicios
             {
                 return null;
             }
-
         }
         public List<EstadoPedido> ListarEstadosPedido()
         {
@@ -68,13 +55,7 @@ namespace Servicios
                 Contexto.SaveChanges();
             }
         }
-        public List<Pedido> ListarPedidosAbiertos()
-        {
-            List<Pedido> listaPedidosAbiertos = Contexto.Pedidos.
-                Where(p => p.IdEstadoNavigation.Descripcion.ToLower().Equals("abierto"))
-                .ToList();
-            return listaPedidosAbiertos;
-        }
+
         public List<PedidoArticulo> EditarArticulosDeUnPedido(List<PedidoArticulo> listaArticulos, int idPedido)
         {
             List<PedidoArticulo> pedidosArticulos = this.BuscarArticulosDeUnPedido(idPedido);
@@ -101,16 +82,10 @@ namespace Servicios
             return Contexto.PedidoArticulos.Where(pa => pa.IdPedido == id).ToList();
         }
 
-        public List<Pedido> ListarPedidosCerrados()
-        {
-            List<Pedido> listaPedidosAbiertos = Contexto.Pedidos.
-                Where(p => p.IdEstadoNavigation.Descripcion.ToLower().Equals("cerrado"))
-                .ToList();
-            return listaPedidosAbiertos;
-        }
+
         public List<Pedido> OrdenarPedidosPorCodigo(List<Pedido> lista)
         {
-            return lista.OrderBy(p=>p.IdPedido).ToList();
+            return lista.OrderBy(p => p.IdPedido).ToList();
         }
         public List<Pedido> OrdenarPedidosPorCreacionReciente(List<Pedido> lista)
         {
@@ -126,6 +101,40 @@ namespace Servicios
         {
             EstadoPedido estado = Contexto.EstadoPedidos.Find(idPedido);
             return estado;
+        }
+
+        public List<Pedido> ListarTodosLosPedidos()
+        {
+            List<Pedido> listaPedidos = Contexto.Pedidos.ToList();
+            return this.OrdenarPedidosPorCreacionReciente(listaPedidos);
+        }
+        public List<Pedido> ListarPedidosAbiertos(List<Pedido> listaPedidos)
+        {
+            List<Pedido> listaAbiertos = listaPedidos.
+                Where(p => p.IdEstadoNavigation.Descripcion.ToLower().Equals("abierto"))
+                .ToList();
+            return listaAbiertos;
+        }
+        public List<Pedido> ListarPedidos(int? cliente, int? estado, string incluir)
+        {
+            List<Pedido> listaPedidos = this.ListarTodosLosPedidos();
+            if(string.IsNullOrEmpty(incluir) || !incluir.Equals("on"))
+            {
+                listaPedidos = listaPedidos.Where(p => !p.FechaBorrado.HasValue).ToList();
+            }
+            if(cliente != null)
+            {
+                listaPedidos = listaPedidos.Where(p => p.IdCliente == cliente).ToList();
+            }
+            if(estado != null)
+            {
+                listaPedidos = listaPedidos.Where(p => p.IdEstado == estado).ToList();
+            }
+            else
+            {
+                listaPedidos = this.ListarPedidosAbiertos(listaPedidos);
+            }
+            return listaPedidos;
         }
     }
 }
