@@ -19,13 +19,15 @@ namespace Servicios
 
         public List<Pedido> ListarPedidosActivos()
         {
-            return Contexto.Pedidos.Include("EstadoPedido").
+            List<Pedido> listaPedidos = Contexto.Pedidos.Include("EstadoPedido").
                 Where(u => u.IdEstadoNavigation.Descripcion.Equals("Abierto")).ToList();
+            return this.OrdenarPedidosPorCodigo(listaPedidos);
         }
 
         public List<Pedido> ListarPedidosConEliminados()
         {
-            return Contexto.Pedidos.ToList();
+            List<Pedido> listaPedidos = Contexto.Pedidos.ToList();
+            return this.OrdenarPedidosPorCodigo(listaPedidos);
         }
         public int CrearPedido(Pedido pedido, Cliente cliente)
         {
@@ -104,6 +106,14 @@ namespace Servicios
         public List<Pedido> ListarPedidosCerrados()
         {
             throw new NotImplementedException();
+        }
+        public List<Pedido> OrdenarPedidosPorCodigo(List<Pedido> lista)
+        {
+            return lista.OrderBy(p=>p.IdPedido).ToList();
+        }
+        public List<Pedido> OrdenarPedidosPorCreacionReciente(List<Pedido> lista)
+        {
+            return lista.OrderBy(p => p.FechaCreacion).ToList();
         }
     }
 }

@@ -56,11 +56,17 @@ namespace Servicios
         }
         public List<Cliente> ListarClientes()
         {
-            return Contexto.Clientes.Where(a => !a.FechaBorrado.HasValue).ToList();
+            List<Cliente> listaClientes = Contexto.Clientes.Where(a => !a.FechaBorrado.HasValue).ToList();
+            return this.OrdenarClientesPorNombre(listaClientes);
         }
         public List<Cliente> ListarClientesConEliminados()
         {
-            return Contexto.Clientes.ToList();
+            List<Cliente> listaClientes = Contexto.Clientes.ToList();
+            return this.OrdenarClientesPorNombre(listaClientes);
+        }
+        public List<Cliente> OrdenarClientesPorNombre(List<Cliente> lista)
+        {
+            return lista.OrderBy(c => c.Nombre).ToList();
         }
     }
 }
