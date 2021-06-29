@@ -30,10 +30,15 @@ namespace TPWeb3.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult CrearArticulo(Articulo articulo)
+        public IActionResult CrearArticulo(Articulo articulo, int retorno)
         {
             if (ArticuloServicio.CrearArticulo(articulo) == 1)
-                return RedirectToAction("Index");
+            {
+                if (retorno == 0)
+                    return RedirectToAction("Index");
+                else
+                    return RedirectToAction("NuevoArticulo");
+            }
             return View(articulo);
         }
 

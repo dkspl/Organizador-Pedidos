@@ -1,6 +1,5 @@
 ﻿$(document).ready(function () {
     $('#incluir').change(function () {
-        //$('#cambio').click();
         $('#formCambio').submit();
     });
     $('.js-example-basic-multiple').select2({
@@ -12,7 +11,8 @@
     $('#lista').dataTable({
         "language": {
             "url": "https://cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json"
-        }
+        },
+        "ordering": false
     });
     $('#nuevoArticulo').click(function () {
         var $cantidadNueva = $('#cantArt').val();

@@ -33,7 +33,11 @@
                 <label asp-for="@Model.FechaNacimiento" class="form-label mt-4">Fecha de nacimiento</label>
                 <input asp-for="@Model.FechaNacimiento" type="date" class="form-control" placeholder="Fecha de nacimiento">
             </div>
-            <button type="submit" class="btn btn-danger m-2">Crear nuevo usuario</button>
+            <input type="hidden" value="" name="retorno" id="retorno" />
+            <a href="/Usuario" class="btn btn-outline-danger mt-2">Cancelar</a>
+            <button type="submit" class="btn btn-danger mt-2 ml-2" id="guardar">Guardar usuario</button>
+            <button type="submit" class="btn btn-danger mt-2 ml-2" id="guardarycrear">Guardar y crear otro</button>
         </fieldset>
     </form>
 </div>
+<script src="~/js/Scripts.js"></script>

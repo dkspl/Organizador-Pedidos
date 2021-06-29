@@ -40,12 +40,17 @@ namespace TPWeb3.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult NuevoUsuario(Usuario usuario)
+        public IActionResult NuevoUsuario(Usuario usuario, int retorno)
         {
             if (ModelState.IsValid)
             {
                 if (_ServicioUsuario.CrearUsuario(usuario) == 1)
-                    return RedirectToAction("Index");
+                {
+                    if (retorno == 0)
+                        return RedirectToAction("Index");
+                    else
+                        return RedirectToAction("NuevoUsuario");
+                }
             }
             return View(usuario);
         }

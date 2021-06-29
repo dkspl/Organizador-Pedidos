@@ -46,11 +46,15 @@ namespace Servicios
 
         public List<Articulo> ListarArticulos()
         {
-            return Contexto.Articulos.Where(a => !a.FechaBorrado.HasValue).ToList();
+            List<Articulo> listaArticulos = Contexto.Articulos.Where(a => !a.FechaBorrado.HasValue).ToList();
+            listaArticulos = this.OrdenarArticulosPorCodigo(listaArticulos);
+            return listaArticulos;
         }
         public List<Articulo> ListarArticulosConEliminados()
         {
-            return Contexto.Articulos.ToList();
+            List<Articulo> listaArticulos = Contexto.Articulos.ToList();
+            listaArticulos = this.OrdenarArticulosPorCodigo(listaArticulos);
+            return listaArticulos;
         }
         public Articulo BuscarArticulo(int id)
         {
@@ -75,6 +79,11 @@ namespace Servicios
                 }
             };
             return articulosConCantidad;
+        }
+        public List<Articulo> OrdenarArticulosPorCodigo(List<Articulo> lista)
+        {
+            List<Articulo> listaOrdenada = lista.OrderBy(a => a.Codigo).ToList();
+            return listaOrdenada;
         }
     }
 }

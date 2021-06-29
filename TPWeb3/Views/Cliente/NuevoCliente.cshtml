@@ -1,7 +1,7 @@
 ﻿@model Entidades.Entidades.Cliente
 <partial name="_Navbar" />
 <div class="container">
-    <h2>Crear nuevo cliente</h2>
+    <h2 class="mt-4">Crear nuevo cliente</h2>
     <form method="post" asp-controller="Cliente" asp-action="NuevoCliente">
         <fieldset>
             <div class="form-group">
@@ -32,7 +32,11 @@
                 <input asp-for="@Model.Direccion" class="form-control" placeholder="Dirección">
                 <span asp-validation-for="@Model.Direccion" class="text-danger"></span>
             </div>
-            <button type="submit" class="btn btn-info mt-2">Crear cliente</button>
+            <input type="hidden" value="" name="retorno" id="retorno" />
+            <a href="/Cliente" class="btn btn-outline-info mt-2">Cancelar</a>
+            <button type="submit" class="btn btn-info mt-2 ml-2" id="guardar">Guardar cliente</button>
+            <button type="submit" class="btn btn-info mt-2 ml-2" id="guardarycrear">Guardar y crear otro</button>
         </fieldset>
     </form>
 </div>
+<script src="~/js/Scripts.js"></script>

@@ -14,8 +14,11 @@
                 <input asp-for="@Model.Descripcion" class="form-control" placeholder="Descripción">
                 <span asp-validation-for="@Model.Descripcion" class="text-danger"></span>
             </div>
-            <button type="submit" class="btn btn-success mt-2">Crear artículo</button>
+            <input type="hidden" value="" name="retorno" id="retorno" />
+            <a href="/Articulo" class="btn btn-outline-success mt-2">Cancelar</a>
+            <button type="submit" class="btn btn-success mt-2 ml-2" id="guardar">Guardar artículo</button>
+            <button type="submit" class="btn btn-success mt-2 ml-2" id="guardarycrear">Guardar y crear otro</button>
         </fieldset>
     </form>
 </div>
-
+<script src="~/js/Scripts.js"></script>

@@ -1,7 +1,7 @@
 ﻿@model Entidades.Entidades.Usuario
 <partial name="_Navbar" />
 <div class="container">
-
+    <partial name="_ModalUsuario" />
     <h2 class="mt-4">Usuario: <small class="text-muted">@Model.Apellido, @Model.Nombre</small></h2>
     <form method="post" asp-controller="Usuario" asp-action="EditarUsuario">
         <input asp-for="@Model.IdUsuario" type="hidden" value="@Model.IdUsuario" />
@@ -46,7 +46,7 @@
                 <button type="button" onclick="addIdTo('@Model.IdUsuario','usuarioPorBorrar')" class="btn btn-outline-danger mt-5 float-right" data-toggle="modal" data-target="#eliminar">
                     Eliminar usuario
                 </button>
-                <partial name="_ModalUsuario" />
+
             }
         </div>
     </form>

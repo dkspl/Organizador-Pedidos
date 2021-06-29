@@ -30,12 +30,17 @@ namespace TPWeb3.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult NuevoCliente(Cliente cliente)
+        public IActionResult NuevoCliente(Cliente cliente, int retorno)
         {
             if (ModelState.IsValid)
             {
                 if (ClienteServicio.CrearCliente(cliente) == 1)
-                    return RedirectToAction("Index");
+                {
+                    if (retorno == 0)
+                        return RedirectToAction("Index");
+                    else
+                        return RedirectToAction("NuevoCliente");
+                }
             }
             return View(cliente);
         }

@@ -62,11 +62,13 @@ namespace Servicios
 
         public List<Usuario> ListarUsuarios()
         {
-            return _contexto.Usuarios.Where(u => !u.FechaBorrado.HasValue).ToList();
+            List<Usuario> listaUsuarios = _contexto.Usuarios.Where(u => !u.FechaBorrado.HasValue).ToList();
+            return this.OrdenarUsuariosPorApellido(listaUsuarios);
         }
         public List<Usuario> ListarUsuariosConEliminados()
         {
-            return _contexto.Usuarios.ToList();
+            List<Usuario> listaUsuarios = _contexto.Usuarios.ToList();
+            return this.OrdenarUsuariosPorApellido(listaUsuarios);
         }
         public List<Usuario> FiltrarPorEmail(string email)
         {
@@ -102,6 +104,10 @@ namespace Servicios
             stream = sha256.ComputeHash(encoding.GetBytes(valor));
             for (int i = 0; i < stream.Length; i++) sb.AppendFormat("{0:x2}", stream[i]);
             return sb.ToString();
+        }
+        public List<Usuario> OrdenarUsuariosPorApellido(List<Usuario> lista)
+        {
+            return lista.OrderBy(u => u.Apellido).ToList();
         }
     }
 }

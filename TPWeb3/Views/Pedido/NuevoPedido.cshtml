@@ -60,8 +60,9 @@
                 <textarea asp-for="@Model.Comentarios" class="form-control"></textarea>
                 <span asp-validation-for="@Model.Comentarios" class="text-danger"></span>
             </div>
-            <input type="hidden" value="" name="retorno" id="" />
-            <button type="submit" class="btn btn-warning mt-2" id="guardar">Guardar pedido</button>
+            <input type="hidden" value="" name="retorno" id="retorno" />
+            <a href="/Pedido" class="btn btn-outline-warning mt-2">Cancelar</a>
+            <button type="submit" class="btn btn-warning mt-2 ml-2" id="guardar">Guardar pedido</button>
             <button type="submit" class="btn btn-warning mt-2 ml-2" id="guardarycrear">Guardar y crear otro</button>
         </fieldset>
     </form>
