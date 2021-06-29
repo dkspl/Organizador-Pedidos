@@ -1,0 +1,23 @@
+﻿<div class="modal" tabindex="-1" role="dialog" id="cerrar">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Cerrar pedido</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post" asp-controller="Pedido" asp-action="CerrarPedido">
+                <div class="modal-body">
+                    <p>¿Está seguro de que desea cambiar el estado del pedido a CERRADO?</p>
+                    <p>Pedido #@Model.IdPedido</p>
+                    <input name="id" id="pedidoPorCerrar" type="hidden" value="" />
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-warning">Cerrar pedido</button>
+                    <button type="button" class="btn btn-outline-warning" data-dismiss="modal">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -19,7 +19,7 @@ namespace Servicios
 
         public List<Pedido> ListarPedidosActivos()
         {
-            List<Pedido> listaPedidos = Contexto.Pedidos.Include("EstadoPedido").
+            List<Pedido> listaPedidos = Contexto.Pedidos.
                 Where(u => u.IdEstadoNavigation.Descripcion.Equals("Abierto")).ToList();
             return this.OrdenarPedidosPorCodigo(listaPedidos);
         }
@@ -63,9 +63,8 @@ namespace Servicios
             {
                 pedidoEncontrado.IdCliente = pedido.IdCliente;
                 pedidoEncontrado.Comentarios = pedido.Comentarios;
-                pedidoEncontrado.IdEstado = pedido.IdEstado;
                 pedidoEncontrado.FechaModificacion = DateTime.Now;
-                this.EditarArticulosDeUnPedido(pedido);
+                pedidoEncontrado.PedidoArticulos = this.EditarArticulosDeUnPedido(pedido.PedidoArticulos.ToList(), pedido.IdPedido);
                 Contexto.SaveChanges();
             }
         }
@@ -76,10 +75,10 @@ namespace Servicios
                 .ToList();
             return listaPedidosAbiertos;
         }
-        public void EditarArticulosDeUnPedido(Pedido pedido)
+        public List<PedidoArticulo> EditarArticulosDeUnPedido(List<PedidoArticulo> listaArticulos, int idPedido)
         {
-            List<PedidoArticulo> pedidosArticulos = this.BuscarArticulosDeUnPedido(pedido.IdPedido);
-            foreach (var articuloNuevo in pedido.PedidoArticulos)
+            List<PedidoArticulo> pedidosArticulos = this.BuscarArticulosDeUnPedido(idPedido);
+            foreach (var articuloNuevo in listaArticulos)
             {
                 int flag = 0;
                 foreach (var articuloDB in pedidosArticulos)
@@ -92,11 +91,10 @@ namespace Servicios
                 }
                 if (flag == 0)
                 {
-                    articuloNuevo.IdPedido = pedido.IdPedido;
-                    Contexto.PedidoArticulos.Add(articuloNuevo);
+                    pedidosArticulos.Add(articuloNuevo);
                 }
             }
-            Contexto.SaveChanges();
+            return pedidosArticulos;
         }
         public List<PedidoArticulo> BuscarArticulosDeUnPedido(int id)
         {
@@ -105,7 +103,10 @@ namespace Servicios
 
         public List<Pedido> ListarPedidosCerrados()
         {
-            throw new NotImplementedException();
+            List<Pedido> listaPedidosAbiertos = Contexto.Pedidos.
+                Where(p => p.IdEstadoNavigation.Descripcion.ToLower().Equals("cerrado"))
+                .ToList();
+            return listaPedidosAbiertos;
         }
         public List<Pedido> OrdenarPedidosPorCodigo(List<Pedido> lista)
         {
@@ -114,6 +115,17 @@ namespace Servicios
         public List<Pedido> OrdenarPedidosPorCreacionReciente(List<Pedido> lista)
         {
             return lista.OrderBy(p => p.FechaCreacion).ToList();
+        }
+
+        public void CambiarEstadoPedido(Pedido pedido)
+        {
+            Pedido pedidoEncontrado = this.BuscarPedido(pedido.IdPedido);
+            pedidoEncontrado.IdEstadoNavigation = this.BuscarEstadoPedidoPorId(pedido.IdEstado);
+        }
+        public EstadoPedido BuscarEstadoPedidoPorId(int idPedido)
+        {
+            EstadoPedido estado = Contexto.EstadoPedidos.Find(idPedido);
+            return estado;
         }
     }
 }

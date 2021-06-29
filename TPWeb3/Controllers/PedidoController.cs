@@ -26,7 +26,7 @@ namespace TPWeb3.Controllers
         }
         public IActionResult NuevoPedido()
         {
-            ViewBag.Clientes = ClienteServicio.ListarClientes();
+            ViewBag.Clientes = ClienteServicio.ListarClientesSinPedidosActivos(PedidoServicio.ListarPedidosActivos());
             ViewBag.Articulos = ArticuloServicio.ListarArticulos();
             ViewBag.ErrorCliente = TempData["ErrorCliente"];
             ViewBag.ErrorArticulo = TempData["ErrorArticulo"];

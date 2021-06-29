@@ -16,8 +16,9 @@ namespace Servicios
         List<EstadoPedido> listarEstadosPedido();
         void EditarPedido(Pedido pedido);
         List<PedidoArticulo> BuscarArticulosDeUnPedido(int id);
-        void EditarArticulosDeUnPedido(Pedido pedido);
+        List<PedidoArticulo> EditarArticulosDeUnPedido(List<PedidoArticulo> listaArticulos, int idPedido);
         List<Pedido> ListarPedidosAbiertos();
         List<Pedido> ListarPedidosCerrados();
+        void CambiarEstadoPedido(Pedido pedido);
     }
 }

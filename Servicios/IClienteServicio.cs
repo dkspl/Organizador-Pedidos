@@ -15,5 +15,6 @@ namespace Servicios
         Cliente EditarCliente(Cliente cliente);
         void EliminarCliente(int id);
         Cliente BuscarCliente(int id);
+        List<Cliente> ListarClientesSinPedidosActivos(List<Pedido> listaPedidosActivos);
     }
 }

@@ -39,11 +39,11 @@
             </div>
         </fieldset>
         <div>
-            <a href="/Usuario/Index" class="btn btn-danger mt-5 mr-3">Volver a Inicio</a>
+            <a href="/Usuario/" class="btn btn-danger mt-5 mr-3">Cancelar</a>
             @if (Model.FechaBorrado == null)
             {
                 <button type="submit" class="btn btn-danger mt-5">Editar</button>
-                <button type="button" onclick="addIdTo('@Model.IdUsuario','usuarioPorBorrar')" class="btn btn-outline-danger mt-5 float-right" data-toggle="modal" data-target="#eliminar">
+                <button type="button" onclick="addIdTo('@Model.IdUsuario','pedidoPorBorrar')" class="btn btn-outline-danger mt-5 float-right" data-toggle="modal" data-target="#eliminar">
                     Eliminar usuario
                 </button>
 

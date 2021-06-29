@@ -1,6 +1,9 @@
 ﻿@model Entidades.Entidades.Pedido
 <partial name="_Navbar" />
 <script src="~/js/Scripts.js"></script>
+<partial name="_ModalCerrar" />
+<partial name="_ModalEliminar" />
+<partial name="_ModalEntregar" />
 <div class="container">
     <h2 class="mt-4">Pedido: @Model.IdPedido</h2>
     <div class="input-group mt-4" id="inputArticulo">
@@ -79,7 +82,22 @@
                 <textarea asp-for="@Model.Comentarios" class="form-control"></textarea>
                 <span asp-validation-for="@Model.Comentarios" class="text-danger"></span>
             </div>
-            <button type="submit" class="btn btn-warning mt-2">Editar pedido</button>
+            <a href="/Pedido" class="btn btn-outline-warning mt-2">Cancelar</a>
+            @if (Model.FechaBorrado == null && Model.IdEstado==1)
+            {
+                <button type="submit" class="btn btn-warning mt-2 ml-2">Modificar</button>
+                <button type="button" onclick="addIdTo('@Model.IdPedido','pedidoPorCerrar')" class="btn btn-warning mt-2 ml-2" data-toggle="modal" data-target="#cerrar">
+                    Cerrar
+                </button>
+                <button type="button" onclick="addIdTo('@Model.IdPedido','pedidoPorEntregar')" class="btn btn-warning mt-2 ml-2" data-toggle="modal" data-target="#entregar">
+                    Entregado
+                </button>
+                <button type="button" onclick="addIdTo('@Model.IdPedido','pedidoPorBorrar')" class="btn btn-outline-warning mt-2 float-right" data-toggle="modal" data-target="#eliminar">
+                    Eliminar
+                </button>
+
+            }
+
         </fieldset>
     </form>
 </div>

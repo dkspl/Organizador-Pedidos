@@ -68,5 +68,17 @@ namespace Servicios
         {
             return lista.OrderBy(c => c.Nombre).ToList();
         }
+        public List<Cliente> ListarClientesSinPedidosActivos(List<Pedido> listaPedidosActivos)
+        {
+            List<Cliente> listaClientes = this.ListarClientes();
+            foreach(Pedido pedido in listaPedidosActivos)
+            {
+                if (listaClientes.Contains(pedido.IdClienteNavigation))
+                {
+                    listaClientes.Remove(pedido.IdClienteNavigation);
+                }
+            }
+            return listaClientes;
+        }
     }
 }

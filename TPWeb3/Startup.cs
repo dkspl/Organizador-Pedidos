@@ -28,9 +28,9 @@ namespace TPWeb3
             services.AddControllersWithViews();
             services.AddDbContext<_20211CTPContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("TPContext")));
-            services.AddDistributedMemoryCache();
             services.AddDbContext<_20211CTPContext>(ef => ef.UseLazyLoadingProxies().
             UseSqlServer(Configuration.GetConnectionString("TPContext")));
+            services.AddDistributedMemoryCache();
 
             services.AddSession(options =>
             {
