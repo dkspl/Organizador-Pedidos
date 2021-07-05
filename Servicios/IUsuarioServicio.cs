@@ -1,4 +1,5 @@
-﻿using Entidades.Entidades;
+﻿using Entidades;
+using Entidades.Entidades;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,5 +17,7 @@ namespace Servicios
         Usuario EditarUsuario(Usuario usuario);
         Usuario BuscarUsuario(int id);
         void EliminarUsuario(int id);
+        UsuarioResponse IniciarSesion(string email, string password);
+        void CerrarSesion();
     }
 }

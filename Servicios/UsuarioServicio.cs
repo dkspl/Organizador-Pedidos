@@ -1,4 +1,7 @@
-﻿using Entidades.Entidades;
+﻿using Entidades;
+using Entidades.Entidades;
+using Microsoft.AspNetCore.Http;
+using Servicios.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,10 +14,14 @@ namespace Servicios
     public class UsuarioServicio : IUsuarioServicio
     {
         _20211CTPContext _contexto;
+        IJwtHelper JwtHelper;
+        IHttpContextAccessor _httpContextAccessor;
 
-        public UsuarioServicio(_20211CTPContext dBContext)
+        public UsuarioServicio(_20211CTPContext dBContext, IJwtHelper jwtHelper, IHttpContextAccessor httpContextAccessor)
         {
             _contexto = dBContext;
+            JwtHelper = jwtHelper;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public Usuario ValidarUsuario(string email, string password)
@@ -24,6 +31,24 @@ namespace Servicios
             {
                 if (usuarioEncontrado.Password.Equals(this.HashSHA256(password)))
                     return usuarioEncontrado;
+            }
+            return null;
+        }
+
+        public UsuarioResponse IniciarSesion(string email, string password)
+        {
+            Usuario usuarioEncontrado = this.ValidarUsuario(email, password);
+            if(usuarioEncontrado!= null)
+            {
+                UsuarioResponse usuario = new UsuarioResponse()
+                {
+                    email = usuarioEncontrado.Email,
+                    id = usuarioEncontrado.IdUsuario.ToString(),
+                    rol = usuarioEncontrado.EsAdmin ? "Administrador" : "Usuario"
+                };
+                AuthenticationHelper.SignIn(_httpContextAccessor.HttpContext, usuario);
+                this.ActualizarFechaUltLogin(usuarioEncontrado.IdUsuario);
+                return usuario;
             }
             return null;
         }
@@ -47,7 +72,12 @@ namespace Servicios
             Usuario usuarioEncontrado = _contexto.Usuarios.Find(id);
             return usuarioEncontrado;
         }
-
+        public void ActualizarFechaUltLogin(int idUsuario)
+        {
+            Usuario usuarioEncontrado = this.BuscarUsuario(idUsuario);
+            usuarioEncontrado.FechaUltLogin = DateTime.Now;
+            _contexto.SaveChanges();
+        }
         public Usuario EditarUsuario(Usuario usuario)
         {
             Usuario usuarioEncontrado = _contexto.Usuarios.Find(usuario.IdUsuario);
@@ -108,6 +138,10 @@ namespace Servicios
         public List<Usuario> OrdenarUsuariosPorApellido(List<Usuario> lista)
         {
             return lista.OrderBy(u => u.Apellido).ToList();
+        }
+        public void CerrarSesion()
+        {
+            AuthenticationHelper.SignOut(_httpContextAccessor.HttpContext);
         }
     }
 }

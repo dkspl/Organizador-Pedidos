@@ -1,4 +1,5 @@
 ﻿using Entidades.Entidades;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Servicios;
 using System;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace TPWeb3.Controllers
 {
+    [Authorize(Roles = "Administrador")]
     public class ArticuloController : Controller
     {
         private IArticuloServicio ArticuloServicio;
@@ -30,14 +32,17 @@ namespace TPWeb3.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult CrearArticulo(Articulo articulo, int retorno)
+        public IActionResult NuevoArticulo(Articulo articulo, int retorno)
         {
-            if (ArticuloServicio.CrearArticulo(articulo) == 1)
+            if (ModelState.IsValid)
             {
-                if (retorno == 0)
-                    return RedirectToAction("Index");
-                else
-                    return RedirectToAction("NuevoArticulo");
+                if (ArticuloServicio.CrearArticulo(articulo) == 1)
+                {
+                    if (retorno == 0)
+                        return RedirectToAction("Index");
+                    else
+                        return RedirectToAction("NuevoArticulo");
+                }
             }
             return View(articulo);
         }

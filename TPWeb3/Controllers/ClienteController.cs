@@ -1,4 +1,5 @@
 ﻿using Entidades.Entidades;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Servicios;
 using System;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace TPWeb3.Controllers
 {
+    [Authorize(Roles = "Administrador")]
     public class ClienteController : Controller
     {
         private IClienteServicio ClienteServicio;

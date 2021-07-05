@@ -1,6 +1,9 @@
 ﻿using Entidades.Entidades;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Servicios;
+using Servicios.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,13 +11,14 @@ using System.Threading.Tasks;
 
 namespace TPWeb3.Controllers
 {
+    [Authorize(Roles = "Administrador")]
     public class UsuarioController : Controller
     {
         private IUsuarioServicio _ServicioUsuario;
 
-        public UsuarioController(_20211CTPContext context)
+        public UsuarioController(_20211CTPContext context, IJwtHelper jwtHelper, IHttpContextAccessor httpContextAccessor)
         {
-            _ServicioUsuario = new UsuarioServicio(context);
+            _ServicioUsuario = new UsuarioServicio(context, jwtHelper,httpContextAccessor);
         }
 
         [HttpGet]

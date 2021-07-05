@@ -91,12 +91,6 @@ namespace Servicios
         {
             return lista.OrderBy(p => p.FechaCreacion).ToList();
         }
-
-        public void CambiarEstadoPedido(Pedido pedido)
-        {
-            Pedido pedidoEncontrado = this.BuscarPedido(pedido.IdPedido);
-            pedidoEncontrado.IdEstadoNavigation = this.BuscarEstadoPedidoPorId(pedido.IdEstado);
-        }
         public EstadoPedido BuscarEstadoPedidoPorId(int idPedido)
         {
             EstadoPedido estado = Contexto.EstadoPedidos.Find(idPedido);
@@ -135,6 +129,40 @@ namespace Servicios
                 listaPedidos = this.ListarPedidosAbiertos(listaPedidos);
             }
             return listaPedidos;
+        }
+
+        public void EliminarPedido(int idPedido)
+        {
+            Pedido pedidoEncontrado = this.BuscarPedido(idPedido);
+            if (pedidoEncontrado != null)
+            {
+                pedidoEncontrado.FechaBorrado = DateTime.Now;
+                Contexto.SaveChanges();
+            }      
+        }
+
+        public void CerrarPedido(int idPedido)
+        {
+            Pedido pedidoEncontrado = this.BuscarPedido(idPedido);
+            if (pedidoEncontrado != null)
+            {
+                pedidoEncontrado.IdEstadoNavigation = this.BuscarEstadoPedidoPorDescripcion("cerrado");
+                Contexto.SaveChanges();
+            }
+        }
+
+        public void EntregarPedido(int idPedido)
+        {
+            Pedido pedidoEncontrado = this.BuscarPedido(idPedido);
+            if (pedidoEncontrado != null)
+            {
+                pedidoEncontrado.IdEstadoNavigation = this.BuscarEstadoPedidoPorDescripcion("entregado");
+                Contexto.SaveChanges();
+            }
+        }
+        public EstadoPedido BuscarEstadoPedidoPorDescripcion(string valor)
+        {
+            return Contexto.EstadoPedidos.Where(ep => ep.Descripcion.Equals(valor)).FirstOrDefault();
         }
     }
 }

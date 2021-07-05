@@ -1,8 +1,11 @@
-﻿using Entidades.Entidades;
+﻿using Entidades;
+using Entidades.Entidades;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Servicios;
+using Servicios.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -12,27 +15,35 @@ using TPWeb3.Models;
 
 namespace TPWeb3.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private IUsuarioServicio UsuarioServicio;
 
-        public HomeController(_20211CTPContext contexto)
+        public HomeController(_20211CTPContext contexto, IJwtHelper jwtHelper, IHttpContextAccessor httpContextAccessor)
         {
-            UsuarioServicio = new UsuarioServicio(contexto);
+            UsuarioServicio = new UsuarioServicio(contexto, jwtHelper,httpContextAccessor);
         }
+
+        [AllowAnonymous]
         public IActionResult Index()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return Redirect("/Pedido");
+            }
             return View();
         }
+
+        [AllowAnonymous]
         [HttpPost]
         public IActionResult Index(UsuarioVM usuario)
         {
             if (ModelState.IsValid)
             {
-                Usuario usuarioValidado = UsuarioServicio.ValidarUsuario(usuario.Email, usuario.Password);
+                UsuarioResponse usuarioValidado=UsuarioServicio.IniciarSesion(usuario.Email, usuario.Password);
                 if (usuarioValidado != null)
                 {
-                    HttpContext.Session.SetInt32("Usuario", usuarioValidado.IdUsuario);
                     return Redirect("/Pedido");
                 }
                 ViewBag.error = "Email y/o password incorrectos.";
@@ -41,7 +52,7 @@ namespace TPWeb3.Controllers
         }
         public IActionResult Logout()
         {
-            HttpContext.Session.Remove("Usuario");
+            UsuarioServicio.CerrarSesion();
             return RedirectToAction("Index");
         }
 
@@ -49,6 +60,10 @@ namespace TPWeb3.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+        public IActionResult NoAutorizado()
+        {
+            return View();
         }
     }
 }
