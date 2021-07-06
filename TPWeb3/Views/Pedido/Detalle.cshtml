@@ -52,7 +52,7 @@
                 }
             </div>
             <div class="container mt-4">
-                <table class="table table-hover mt-4">
+                <table class="table table-hover mt-4" id="tablaArt">
                     <thead>
                         <tr>
                             <th scope="col">Descripción</th>
@@ -68,7 +68,9 @@
                                 <td>@articulo.IdArticuloNavigation.Descripcion</td>
                                 <td>@articulo.IdArticulo</td>
                                 <td id="Cantidad_@articulo.IdArticulo">@articulo.Cantidad</td>
-                                <td><a target="_blank" class="btn btn-success" href="/Articulo/Detalle/@articulo.IdArticulo">Ver</a></td>
+                                <td>
+                                    <button type="button" class="btn btn-outline-warning quitar">Quitar</button>
+                                </td>
                                 <input type="hidden" id="Articulo_@articulo.IdArticulo" name="Articulos[@articulo.IdArticulo]" class="form-control articulo" value="@articulo.Cantidad">
                             </tr>
                         }
@@ -85,14 +87,14 @@
             <a href="/Pedido" class="btn btn-outline-warning mt-2">Cancelar</a>
             @if (Model.FechaBorrado == null && Model.IdEstado==1)
             {
-                <button type="submit" class="btn btn-warning mt-2 ml-2">Modificar</button>
-                <button type="button" onclick="addIdTo('@Model.IdPedido','pedidoPorCerrar')" class="btn btn-warning mt-2 ml-2" data-toggle="modal" data-target="#cerrar">
+                <button type="submit" class="btn btn-warning mt-2 ml-2 btnAct">Modificar</button>
+                <button type="button" onclick="addIdTo('@Model.IdPedido','pedidoPorCerrar')" class="btn btn-warning mt-2 ml-2 btnAct" data-toggle="modal" data-target="#cerrar">
                     Cerrar
                 </button>
-                <button type="button" onclick="addIdTo('@Model.IdPedido','pedidoPorEntregar')" class="btn btn-warning mt-2 ml-2" data-toggle="modal" data-target="#entregar">
+                <button type="button" onclick="addIdTo('@Model.IdPedido','pedidoPorEntregar')" class="btn btn-warning mt-2 ml-2 btnAct" data-toggle="modal" data-target="#entregar">
                     Entregado
                 </button>
-                <button type="button" onclick="addIdTo('@Model.IdPedido','pedidoPorBorrar')" class="btn btn-outline-warning mt-2 float-right" data-toggle="modal" data-target="#eliminar">
+                <button type="button" onclick="addIdTo('@Model.IdPedido','pedidoPorBorrar')" class="btn btn-outline-warning mt-2 btnAct float-right" data-toggle="modal" data-target="#eliminar">
                     Eliminar
                 </button>
 

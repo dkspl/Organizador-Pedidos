@@ -28,6 +28,8 @@ namespace TPWeb3.Controllers
             ViewBag.Clientes = ClienteServicio.ListarClientes();
             ViewBag.Estados = PedidoServicio.ListarEstadosPedido();
             ViewBag.Cliente = cliente;
+            if (estado == null)
+                estado = 1;
             ViewBag.Estado = estado;
             ViewBag.Incluir = incluir;
             

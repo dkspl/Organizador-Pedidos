@@ -10,7 +10,7 @@
         <div class="mt-2 mb-4 row">
             <div class="mt-4 col" id="inputFiltro">
                 <select name="cliente" class="custom-select js-example-basic-single" id="cliente">
-                    <option value="">--Seleccione un cliente--</option>
+                    <option value="">todos los clientes</option>
                     @foreach (var cliente in ViewBag.Clientes)
                     {
                         if (ViewBag.Cliente != null && cliente.IdCliente == ViewBag.Cliente)
@@ -27,10 +27,10 @@
             </div>
             <div class="mt-4 col">
                 <select name="estado" class="custom-select js-example-basic-single" id="estado">
-                    <option value="">--Seleccione un estado--</option>
+                    <option value="0">todos los estados</option>
                     @foreach (var estado in ViewBag.Estados)
                     {
-                        if (ViewBag.Estado != null && estado.IdEstadoPedido == ViewBag.Estado)
+                        if (ViewBag.Estado != null && ViewBag.Estado != 0 && estado.IdEstadoPedido == ViewBag.Estado)
                         {
                             <option value="@estado.IdEstadoPedido" selected>@estado.Descripcion</option>
                         }

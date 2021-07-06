@@ -122,7 +122,8 @@ namespace Servicios
             }
             if(estado != null)
             {
-                listaPedidos = listaPedidos.Where(p => p.IdEstado == estado).ToList();
+                if(estado != 0)
+                    listaPedidos = listaPedidos.Where(p => p.IdEstado == estado).ToList();
             }
             else
             {
