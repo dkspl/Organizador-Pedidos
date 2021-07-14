@@ -29,8 +29,9 @@ namespace TPWeb3.Controllers
         }
 
         [AllowAnonymous]
-        public IActionResult Index()
+        public IActionResult Index(string ReturnUrl)
         {
+            TempData["ReturnUrl"] = ReturnUrl;
             if (User.Identity.IsAuthenticated)
             {
                 return Redirect("/Pedido");
@@ -47,6 +48,9 @@ namespace TPWeb3.Controllers
                 UsuarioResponseModel usuarioValidado=UsuarioServicio.IniciarSesion(usuario.Email, usuario.Password);
                 if (usuarioValidado != null)
                 {
+                    string url = (string)TempData["ReturnUrl"];
+                    if (!string.IsNullOrEmpty(url))
+                        return Redirect(url);
                     return Redirect("/Pedido");
                 }
                 ViewBag.error = "Email y/o password incorrectos.";
