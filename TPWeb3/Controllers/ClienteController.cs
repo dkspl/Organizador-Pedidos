@@ -15,11 +15,13 @@ namespace TPWeb3.Controllers
     public class ClienteController : Controller
     {
         private IClienteServicio ClienteServicio;
+        private IPedidoServicio PedidoServicio;
         private readonly INotyfService _notyf;
 
         public ClienteController(_20211CTPContext contexto, INotyfService notyf)
         {
             ClienteServicio = new ClienteServicio(contexto);
+            PedidoServicio = new PedidoServicio(contexto);
             _notyf = notyf;
         }
         public IActionResult Index(string incluir)
@@ -71,6 +73,7 @@ namespace TPWeb3.Controllers
         {
             int eliminadoPor = Int32.Parse(HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Name)?.Value);
             ClienteServicio.EliminarCliente(id, eliminadoPor);
+            PedidoServicio.BorrarPedidosDeClienteBorrado(id, eliminadoPor);
             return RedirectToAction("Index");
         }
         [HttpPost]

@@ -1,5 +1,6 @@
 ﻿@model Entidades.Entidades.Articulo
 <partial name="_Navbar" />
+<partial name="_ModalArticulo" />
 <div class="container">
     <h2 class="mt-4">Artículo: <small class="text-muted">@Model.IdArticulo</small></h2>
     <form method="post" asp-controller="Articulo" asp-action="EditarArticulo">
@@ -38,7 +39,6 @@
                 <button type="button" onclick="addIdTo('@Model.IdArticulo','articuloPorBorrar')" class="btn btn-outline-success mt-5 float-right" data-toggle="modal" data-target="#eliminar">
                     Eliminar artículo
                 </button>
-                <partial name="_ModalArticulo" />
             }
         </div>
     </form>

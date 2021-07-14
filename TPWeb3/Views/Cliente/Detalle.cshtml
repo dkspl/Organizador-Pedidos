@@ -1,5 +1,6 @@
 ﻿@model Entidades.Entidades.Cliente
 <partial name="_Navbar" />
+<partial name="_ModalCliente" />
 <div class="container">
     <h2 class="mt-4">Cliente: <small class="text-muted">@Model.Nombre</small></h2>
     <form method="post" asp-controller="Cliente" asp-action="EditarCliente">
@@ -57,7 +58,6 @@
                 <button type="button" onclick="addIdTo('@Model.IdCliente','clientePorBorrar')" class="btn btn-outline-info mt-5 float-right" data-toggle="modal" data-target="#eliminar">
                     Eliminar cliente
                 </button>
-                <partial name="_ModalCliente" />
             }
         </div>
     </form>

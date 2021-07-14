@@ -120,11 +120,11 @@ namespace Servicios
             List<Pedido> listaPedidos = this.ListarTodosLosPedidos();
             if(string.IsNullOrEmpty(incluir) || !incluir.Equals("on"))
             {
-                listaPedidos = listaPedidos.Where(p => !p.FechaBorrado.HasValue).ToList();
+                listaPedidos = this.BuscarPedidosNoEliminados(listaPedidos);
             }
             if(cliente != null)
             {
-                listaPedidos = listaPedidos.Where(p => p.IdCliente == cliente).ToList();
+                listaPedidos = this.BuscarPedidosDeUnCliente(listaPedidos, (int)cliente);
             }
             if(estado != null)
             {
@@ -247,6 +247,43 @@ namespace Servicios
             nuevoPedido.FechaCreacion = DateTime.Now;
             nuevoPedido.NroPedido = long.Parse(nuevoPedido.FechaCreacion.ToString("yMMddHHmm") + pedido.IdCliente.ToString());
             return pedido.IdPedido;
+        }
+
+        public void BorrarPedidosDeClienteBorrado(int idCliente, int eliminadoPor)
+        {
+            List<Pedido> listaPedidos = this.BuscarPedidosNoEliminados(this.ListarTodosLosPedidos());
+            listaPedidos = this.BuscarPedidosDeUnCliente(listaPedidos, idCliente);
+
+            foreach(Pedido pedido in listaPedidos)
+            {
+                this.EliminarPedido(pedido.IdPedido, eliminadoPor);
+            }
+        }
+        public List<Pedido> BuscarPedidosDeUnCliente(List<Pedido> pedidos, int IdCliente)
+        {
+            return pedidos.Where(p => p.IdCliente == IdCliente).ToList();
+        }
+        public List<Pedido> BuscarPedidosNoEliminados(List<Pedido> pedidos)
+        {
+            return pedidos.Where(p => !p.FechaBorrado.HasValue).ToList();
+        }
+        public void BorrarArticulosPorArticuloBorrado(int idArticulo, int eliminadoPor)
+        {
+            List<PedidoArticulo> lista = this.BuscarPedidosSegunArticulo(idArticulo);
+            foreach(PedidoArticulo pedido in lista)
+            {
+                Contexto.PedidoArticulos.Remove(pedido);
+                Contexto.SaveChanges();
+                Pedido pedidoModificado = this.BuscarPedido(pedido.IdPedido);
+                pedidoModificado.ModificadoPor = eliminadoPor;
+                this.EditarPedido(pedidoModificado);
+            }    
+        }
+
+        public List<PedidoArticulo> BuscarPedidosSegunArticulo(int idArticulo)
+        {
+            List<PedidoArticulo> lista = Contexto.PedidoArticulos.Where(pa => pa.IdArticulo == idArticulo).ToList();
+            return lista;
         }
     }
 }

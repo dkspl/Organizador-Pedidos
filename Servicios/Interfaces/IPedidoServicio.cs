@@ -25,5 +25,7 @@ namespace Servicios
         List<PedidoModel> ListarPedidoModels(int? cliente, int? estado, string incluir);
         List<ArticuloCantidadModel> ListarArticulosConCantidades(List<PedidoArticulo> articulos);
         int? CrearPedidoAPI(PedidoRequestModel pedido);
+        void BorrarPedidosDeClienteBorrado(int idCliente, int eliminadoPor);
+        void BorrarArticulosPorArticuloBorrado(int idArticulo, int eliminadoPor);
     }
 }

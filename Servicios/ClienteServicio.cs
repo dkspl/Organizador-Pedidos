@@ -51,7 +51,7 @@ namespace Servicios
             if (clienteEncontrado != null)
             {
                 clienteEncontrado.FechaBorrado = DateTime.Now;
-                clienteEncontrado.FechaModificacion = clienteEncontrado.FechaBorrado;
+                clienteEncontrado.BorradoPor = eliminadoPor;
                 Contexto.SaveChanges();
             }
         }
