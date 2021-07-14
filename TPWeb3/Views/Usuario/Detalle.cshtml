@@ -1,5 +1,5 @@
 ﻿@model Entidades.Entidades.Usuario
-    <partial name="_NavbarAdmin" />
+<partial name="_NavbarAdmin" />
 <div class="container">
     <partial name="_ModalUsuario" />
     <h2 class="mt-4">Usuario: <small class="text-muted">@Model.Apellido, @Model.Nombre</small></h2>
@@ -57,7 +57,6 @@
                 <button type="button" onclick="addIdTo('@Model.IdUsuario','pedidoPorBorrar')" class="btn btn-outline-danger mt-5 float-right" data-toggle="modal" data-target="#eliminar">
                     Eliminar usuario
                 </button>
-
             }
         </div>
     </form>

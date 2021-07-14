@@ -15,19 +15,18 @@
 
     <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap4.min.js"></script>
-    <script src="~/js/Functions.js"></script>
+    <environment include="Development">
+        <script src="~/js/Functions.js"></script>
+        <script src="~/js/scripts.js"></script>
+    </environment>
+    <environment include="Development">
+        <script src="~/js/scripts.min.js"></script>
+    </environment>
     <link rel="stylesheet" href="~/css\bootstrap.min.css" />
-
-
 </head>
-<body>
-
-    
+<body>  
     @RenderBody()
     <partial name="pv_Footer" />
-    <!--<script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>-->
-
     @await RenderSectionAsync("Scripts", required: false)
     @await Component.InvokeAsync("Notyf")
 </body>
