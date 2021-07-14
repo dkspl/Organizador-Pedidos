@@ -1,4 +1,5 @@
 ﻿using Entidades.Entidades;
+using Entidades.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,5 +17,7 @@ namespace Servicios
         void EliminarArticulo(int id);
         Articulo BuscarArticulo(int id);
         List<PedidoArticulo> AgregarArticulos(Dictionary<int, int> articulos);
+        List<ArticuloModel> ListarArticuloModels(List<Articulo> articulo);
+        List<ArticuloModel> FiltrarArticulosPorNombre(string filtro);
     }
 }

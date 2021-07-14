@@ -1,4 +1,5 @@
 ﻿using Entidades.Entidades;
+using Entidades.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -79,6 +80,32 @@ namespace Servicios
                 }
             }
             return listaClientes;
+        }
+
+        public List<ClienteModel> ListarClienteModels(List<Cliente> clientes)
+        {
+            List<ClienteModel> clientesModel = new List<ClienteModel>();
+            foreach(Cliente cliente in clientes)
+            {
+                ClienteModel nuevoCliente = new ClienteModel()
+                {
+                    IdCliente = cliente.IdCliente,
+                    Numero = cliente.Numero,
+                    Nombre = cliente.Nombre,
+                    Direccion = cliente.Direccion,
+                    Telefono = cliente.Telefono
+                };
+                clientesModel.Add(nuevoCliente);
+            }
+
+            return clientesModel;
+        } 
+        public List<ClienteModel> FiltrarClientesPorNombre(string filtro)
+        {
+            List<Cliente> listaClientes = this.ListarClientes();
+            listaClientes = listaClientes.Where(c => c.Nombre.ToLower().Contains(filtro.ToLower())).ToList();
+            List<ClienteModel> listaResponse = this.ListarClienteModels(listaClientes);
+            return listaResponse;
         }
     }
 }

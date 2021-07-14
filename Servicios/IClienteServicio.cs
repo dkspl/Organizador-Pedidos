@@ -1,4 +1,5 @@
 ﻿using Entidades.Entidades;
+using Entidades.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,5 +17,7 @@ namespace Servicios
         void EliminarCliente(int id);
         Cliente BuscarCliente(int id);
         List<Cliente> ListarClientesSinPedidosActivos(List<Pedido> listaPedidosActivos);
+        List<ClienteModel> ListarClienteModels(List<Cliente> cliente);
+        List<ClienteModel> FiltrarClientesPorNombre(string filtro);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Entidades;
 using Entidades.Entidades;
+using Entidades.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,7 @@ namespace Servicios
         Usuario BuscarUsuario(int id);
         void EliminarUsuario(int id);
         UsuarioResponse IniciarSesion(string email, string password);
+        UsuarioModel IniciarSesionAPI(string email, string password);
         void CerrarSesion();
     }
 }

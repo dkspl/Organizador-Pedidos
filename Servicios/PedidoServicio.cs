@@ -147,7 +147,7 @@ namespace Servicios
             Pedido pedidoEncontrado = this.BuscarPedido(idPedido);
             if (pedidoEncontrado != null)
             {
-                pedidoEncontrado.IdEstadoNavigation = this.BuscarEstadoPedidoPorDescripcion("cerrado");
+                pedidoEncontrado.IdEstadoNavigation = this.BuscarEstadoPedidoPorDescripcion("Cerrado");
                 Contexto.SaveChanges();
             }
         }
@@ -157,7 +157,7 @@ namespace Servicios
             Pedido pedidoEncontrado = this.BuscarPedido(idPedido);
             if (pedidoEncontrado != null)
             {
-                pedidoEncontrado.IdEstadoNavigation = this.BuscarEstadoPedidoPorDescripcion("entregado");
+                pedidoEncontrado.IdEstadoNavigation = this.BuscarEstadoPedidoPorDescripcion("Entregado");
                 Contexto.SaveChanges();
             }
         }

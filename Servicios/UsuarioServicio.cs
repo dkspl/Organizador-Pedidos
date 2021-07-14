@@ -1,5 +1,6 @@
 ﻿using Entidades;
 using Entidades.Entidades;
+using Entidades.Models;
 using Microsoft.AspNetCore.Http;
 using Servicios.Helpers;
 using System;
@@ -48,6 +49,24 @@ namespace Servicios
                 };
                 AuthenticationHelper.SignIn(_httpContextAccessor.HttpContext, usuario);
                 this.ActualizarFechaUltLogin(usuarioEncontrado.IdUsuario);
+                return usuario;
+            }
+            return null;
+        }
+        public UsuarioModel IniciarSesionAPI(string email, string password)
+        {
+            Usuario usuarioEncontrado = this.ValidarUsuario(email, password);
+            if (usuarioEncontrado != null)
+            {
+                UsuarioModel usuario = new UsuarioModel()
+                {
+                    Email = usuarioEncontrado.Email,
+                    IdUsuario = usuarioEncontrado.IdUsuario.ToString(),
+                    Nombre = usuarioEncontrado.Nombre,
+                    Apellido = usuarioEncontrado.Apellido,
+                    FechaNacimiento = usuarioEncontrado.FechaNacimiento,
+                    Token = JwtHelper.GenerarToken(usuarioEncontrado)
+                };
                 return usuario;
             }
             return null;

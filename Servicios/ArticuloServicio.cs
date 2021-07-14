@@ -1,4 +1,5 @@
 ﻿using Entidades.Entidades;
+using Entidades.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -84,6 +85,31 @@ namespace Servicios
         {
             List<Articulo> listaOrdenada = lista.OrderBy(a => a.Codigo).ToList();
             return listaOrdenada;
+        }
+
+        public List<ArticuloModel> ListarArticuloModels(List<Articulo> articulos)
+        {
+            List<ArticuloModel> articulosModel = new List<ArticuloModel>();
+            foreach (Articulo articulo in articulos)
+            {
+                ArticuloModel nuevoCliente = new ArticuloModel()
+                {
+                    IdArticulo = articulo.IdArticulo,
+                    Codigo = articulo.Codigo,
+                    Descripcion = articulo.Descripcion
+                };
+                articulosModel.Add(nuevoCliente);
+            }
+
+            return articulosModel;
+        }
+
+        public List<ArticuloModel> FiltrarArticulosPorNombre(string filtro)
+        {
+            List<Articulo> listaArticulos = this.ListarArticulos();
+            listaArticulos = listaArticulos.Where(c => c.Descripcion.ToLower().Contains(filtro.ToLower())).ToList();
+            List<ArticuloModel> listaResponse = this.ListarArticuloModels(listaArticulos);
+            return listaResponse;
         }
     }
 }

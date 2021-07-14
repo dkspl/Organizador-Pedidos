@@ -36,7 +36,7 @@ namespace Servicios.Helpers
                     new Claim(ClaimTypes.Role, usuario.EsAdmin ? "Administrador": "Usuario")
 
                 }),
-                Expires = DateTime.UtcNow.AddMinutes(5),
+                Expires = DateTime.UtcNow.AddMinutes(2),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(tokenKey), SecurityAlgorithms.HmacSha256Signature)
             };
 

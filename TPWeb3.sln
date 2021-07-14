@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Servicios", "Servicios\Serv
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Entidades", "Entidades\Entidades.csproj", "{A7D29B3C-8357-467F-935F-174FE317D112}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TPWeb3API", "TPWeb3API\TPWeb3API.csproj", "{D9EC5052-C46A-4465-BB32-0D8028FDDA03}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TPWeb3API", "TPWeb3API\TPWeb3API.csproj", "{1EF8D3C3-AF69-431B-8D86-E4E75822A953}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +29,10 @@ Global
 		{A7D29B3C-8357-467F-935F-174FE317D112}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A7D29B3C-8357-467F-935F-174FE317D112}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A7D29B3C-8357-467F-935F-174FE317D112}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D9EC5052-C46A-4465-BB32-0D8028FDDA03}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D9EC5052-C46A-4465-BB32-0D8028FDDA03}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D9EC5052-C46A-4465-BB32-0D8028FDDA03}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D9EC5052-C46A-4465-BB32-0D8028FDDA03}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1EF8D3C3-AF69-431B-8D86-E4E75822A953}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1EF8D3C3-AF69-431B-8D86-E4E75822A953}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1EF8D3C3-AF69-431B-8D86-E4E75822A953}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1EF8D3C3-AF69-431B-8D86-E4E75822A953}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
