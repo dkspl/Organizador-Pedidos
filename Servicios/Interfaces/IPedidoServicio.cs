@@ -24,5 +24,6 @@ namespace Servicios
         List<Pedido> ListarPedidos(int? cliente, int? estado, string incluir);
         List<PedidoModel> ListarPedidoModels(int? cliente, int? estado, string incluir);
         List<ArticuloCantidadModel> ListarArticulosConCantidades(List<PedidoArticulo> articulos);
+        int? CrearPedidoAPI(PedidoRequestModel pedido);
     }
 }

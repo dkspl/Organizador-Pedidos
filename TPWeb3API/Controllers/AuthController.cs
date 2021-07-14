@@ -1,6 +1,7 @@
 ﻿using Entidades;
 using Entidades.Entidades;
 using Entidades.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Servicios;
@@ -15,6 +16,7 @@ namespace TPWeb3API.Controllers
 {
     [Route("api/v1/[controller]")]
     [ApiController]
+    [Authorize]
     public class AuthController : ControllerBase
     {
         private IUsuarioServicio UsuarioServicio;
@@ -23,6 +25,7 @@ namespace TPWeb3API.Controllers
         {
             UsuarioServicio = new UsuarioServicio(contexto, jwtHelper, httpContextAccessor);
         }
+        [AllowAnonymous]
         [Route("Login")]
         [HttpPost]
         public UsuarioLogueadoModel Login(UsuarioVM usuario)

@@ -219,5 +219,28 @@ namespace Servicios
             }
             return listaModel;
         }
+
+        public int? CrearPedidoAPI(PedidoRequestModel pedido)
+        {
+            Pedido nuevoPedido = new Pedido()
+            {
+                IdPedido = pedido.IdPedido,
+                IdEstado = 1,
+                ModificadoPor = pedido.ModificadoPor,
+                IdCliente = pedido.IdCliente,
+            };
+            foreach(ArticuloCantidadModel articulo in pedido.Articulos)
+            {
+                PedidoArticulo pedidoArticulo = new PedidoArticulo()
+                {
+                    IdArticulo = articulo.IdArticulo,
+                    Cantidad = articulo.Cantidad
+                };
+                nuevoPedido.PedidoArticulos.Add(pedidoArticulo);
+            }
+            nuevoPedido.FechaCreacion = DateTime.Now;
+            nuevoPedido.NroPedido = long.Parse(nuevoPedido.FechaCreacion.ToString("yMMddHHmm") + pedido.IdCliente.ToString());
+            return pedido.IdPedido;
+        }
     }
 }

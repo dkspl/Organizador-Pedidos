@@ -1,5 +1,6 @@
 ﻿using Entidades.Entidades;
 using Entidades.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -13,6 +14,7 @@ namespace TPWeb3API.Controllers
 {
     [Route("api/v1/[controller]")]
     [ApiController]
+    [Authorize]
     public class PedidosController : ControllerBase
     {
         private IPedidoServicio PedidoServicio;
@@ -39,6 +41,19 @@ namespace TPWeb3API.Controllers
                 ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             });
             return listaSerializada;
+        }
+
+        [Route("Guardar")]
+        [HttpPost]
+        public string Guardar(PedidoRequestModel pedido)
+        {
+            int? IdPedido = PedidoServicio.CrearPedidoAPI(pedido);
+            var returnObj = new { Mensaje = "Pedido "+IdPedido.ToString()+" guardado con éxito."};
+            string json = JsonConvert.SerializeObject(returnObj, Formatting.Indented, new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            });
+            return json;
         }
     }
 }
