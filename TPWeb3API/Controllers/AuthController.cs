@@ -13,7 +13,7 @@ using TPWeb3.Models;
 
 namespace TPWeb3API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     [ApiController]
     public class AuthController : ControllerBase
     {

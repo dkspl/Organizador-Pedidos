@@ -10,7 +10,7 @@ namespace Servicios
 {
     public interface IPedidoServicio
     {
-        int CrearPedido(Pedido pedido, Cliente cliente);
+        Pedido CrearPedido(Pedido pedido, Cliente cliente);
         Pedido BuscarPedido(int id);
         List<EstadoPedido> ListarEstadosPedido();
         void EditarPedido(Pedido pedido);

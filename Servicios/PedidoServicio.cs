@@ -18,7 +18,7 @@ namespace Servicios
             Contexto = dBContext;
         }
 
-        public int CrearPedido(Pedido pedido, Cliente cliente)
+        public Pedido CrearPedido(Pedido pedido, Cliente cliente)
         {
             pedido.IdClienteNavigation = cliente;
             pedido.IdEstado = 1;
@@ -26,7 +26,11 @@ namespace Servicios
             pedido.NroPedido = long.Parse(pedido.FechaCreacion.ToString("yMMddHHmm") + cliente.IdCliente.ToString());
             Contexto.Pedidos.Add(pedido);
             int ingreso = Contexto.SaveChanges();
-            return ingreso;
+            if (ingreso != 0)
+            {
+                return pedido;
+            }
+            return null;
         }
         public Pedido BuscarPedido(int id)
         {
@@ -139,6 +143,7 @@ namespace Servicios
             if (pedidoEncontrado != null)
             {
                 pedidoEncontrado.FechaBorrado = DateTime.Now;
+                this.CerrarPedido(idPedido);
                 Contexto.SaveChanges();
             }      
         }

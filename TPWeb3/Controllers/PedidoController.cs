@@ -35,7 +35,10 @@ namespace TPWeb3.Controllers
                 estado = 1;
             ViewBag.Estado = estado;
             ViewBag.Incluir = incluir;
-            
+            if (TempData["notificacion"] != null)
+            {
+                _notyf.Success("El pedido " + TempData["notificacion"] + " se ha creado con éxito.");
+            }
             return View(PedidoServicio.ListarPedidos(cliente, estado, incluir));
         }
         public IActionResult NuevoPedido()
@@ -47,9 +50,9 @@ namespace TPWeb3.Controllers
             ViewBag.Articulos = ArticuloServicio.ListarArticulos();
             ViewBag.ErrorCliente = TempData["ErrorCliente"];
             ViewBag.ErrorArticulo = TempData["ErrorArticulo"];
-            if(TempData["notificacion"] != null)
+            if (TempData["notificacion"] != null)
             {
-                _notyf.Success("Pedido creado");
+                _notyf.Success("El pedido " + TempData["notificacion"] + " se ha creado con éxito.");
             }
             return View();
         }
@@ -65,15 +68,15 @@ namespace TPWeb3.Controllers
                     if (listaArticulos.Count != 0)
                     {
                         pedido.PedidoArticulos = ArticuloServicio.AgregarArticulos(Articulos);
-                        PedidoServicio.CrearPedido(pedido, ClienteServicio.BuscarCliente(idCliente));
-                        if (retorno == 0)
-                            return RedirectToAction("Index");
-                        else
+                        Pedido nuevoPedido = PedidoServicio.CrearPedido(pedido, ClienteServicio.BuscarCliente(idCliente));
+                        if(nuevoPedido != null)
                         {
-                            TempData["notificacion"] = 1;
-                            return RedirectToAction("NuevoPedido");
-                        }
-                            
+                            TempData["notificacion"] = nuevoPedido.IdClienteNavigation.Nombre + " #" + nuevoPedido.IdPedido.ToString();
+                            if (retorno == 0)
+                                return RedirectToAction("Index");
+                            else
+                                return RedirectToAction("NuevoPedido");
+                        }    
                     }
                     else
                     {
