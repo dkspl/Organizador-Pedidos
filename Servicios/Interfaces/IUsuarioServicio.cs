@@ -17,7 +17,7 @@ namespace Servicios
         int CrearUsuario(Usuario usuario);
         Usuario EditarUsuario(Usuario usuario);
         Usuario BuscarUsuario(int id);
-        void EliminarUsuario(int id);
+        void EliminarUsuario(int id, int eliminadoPor);
         UsuarioResponseModel IniciarSesion(string email, string password);
         UsuarioLogueadoModel IniciarSesionAPI(string email, string password);
         void CerrarSesion();

@@ -84,8 +84,15 @@
                 <textarea asp-for="@Model.Comentarios" class="form-control"></textarea>
                 <span asp-validation-for="@Model.Comentarios" class="text-danger"></span>
             </div>
+            @if (Model.FechaBorrado != null)
+            {
+                <div class="form-group">
+                    <label for="borrado" class="form-label mt-2">Fecha de borrado:</label>
+                    <span class="form-control" id="borrado">@Model.FechaBorrado</span>
+                </div>
+            }
             <a href="/Pedido" class="btn btn-outline-warning mt-2">Cancelar</a>
-            @if (Model.FechaBorrado == null && Model.IdEstado==1)
+            @if (Model.FechaBorrado == null && Model.IdEstado == 1)
             {
                 <button type="submit" class="btn btn-warning mt-2 ml-2 btnAct">Modificar</button>
                 <button type="button" onclick="addIdTo('@Model.IdPedido','pedidoPorCerrar')" class="btn btn-warning mt-2 ml-2 btnAct" data-toggle="modal" data-target="#cerrar">

@@ -43,8 +43,6 @@ namespace TPWeb3.Controllers
         }
         public IActionResult NuevoPedido()
         {
-            var userId = HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Name)?.Value;
-            ViewBag.User = userId;
             ViewBag.Clientes = ClienteServicio.ListarClientesSinPedidosActivos
                 (PedidoServicio.ListarPedidosAbiertos(PedidoServicio.ListarTodosLosPedidos()));
             ViewBag.Articulos = ArticuloServicio.ListarArticulos();
@@ -68,6 +66,7 @@ namespace TPWeb3.Controllers
                     if (listaArticulos.Count != 0)
                     {
                         pedido.PedidoArticulos = ArticuloServicio.AgregarArticulos(Articulos);
+                        pedido.CreadoPor = Int32.Parse(HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Name)?.Value);
                         Pedido nuevoPedido = PedidoServicio.CrearPedido(pedido, ClienteServicio.BuscarCliente(idCliente));
                         if(nuevoPedido != null)
                         {
@@ -107,6 +106,7 @@ namespace TPWeb3.Controllers
             if (listaArticulos.Count != 0)
             {
                 pedido.PedidoArticulos = ArticuloServicio.AgregarArticulos(Articulos);
+                pedido.ModificadoPor=Int32.Parse(HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Name)?.Value);
                 PedidoServicio.EditarPedido(pedido);
             }
             else
@@ -120,19 +120,22 @@ namespace TPWeb3.Controllers
         [HttpPost]
         public IActionResult EliminarPedido(int id)
         {
-            PedidoServicio.EliminarPedido(id);
+            int eliminadoPor= Int32.Parse(HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Name)?.Value);
+            PedidoServicio.EliminarPedido(id, eliminadoPor);
             return RedirectToAction("Index");
         }
         [HttpPost]
         public IActionResult CerrarPedido(int id)
         {
-            PedidoServicio.CerrarPedido(id);
+            int modificadoPor = Int32.Parse(HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Name)?.Value);
+            PedidoServicio.CerrarPedido(id, modificadoPor);
             return RedirectToAction("Index");
         }
         [HttpPost]
         public IActionResult EntregarPedido(int id)
         {
-            PedidoServicio.EntregarPedido(id);
+            int modificadoPor = Int32.Parse(HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Name)?.Value);
+            PedidoServicio.EntregarPedido(id, modificadoPor);
             return RedirectToAction("Index");
         }
     }

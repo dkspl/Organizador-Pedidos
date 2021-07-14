@@ -40,6 +40,13 @@
                 <label for="modificacion" class="form-label mt-2">Última vez modificado:</label>
                 <span class="form-control" id="modificacion">@Model.FechaModificacion</span>
             </div>
+            @if (Model.FechaBorrado != null)
+            {
+                <div class="form-group">
+                    <label for="borrado" class="form-label mt-2">Fecha de borrado:</label>
+                    <span class="form-control" id="borrado">@Model.FechaBorrado</span>
+                </div>
+            }
         </fieldset>
         <div>
             <a href="/Cliente/Index" class="btn btn-info mt-5 mr-3">Volver a Inicio</a>

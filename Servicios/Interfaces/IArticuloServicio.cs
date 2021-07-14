@@ -14,7 +14,7 @@ namespace Servicios
         List<Articulo> ListarArticulos();
         List<Articulo> ListarArticulosConEliminados();
         Articulo EditarArticulo(Articulo articulo);
-        void EliminarArticulo(int id);
+        void EliminarArticulo(int id, int eliminadoPor);
         Articulo BuscarArticulo(int id);
         List<PedidoArticulo> AgregarArticulos(Dictionary<int, int> articulos);
         List<ArticuloModel> ListarArticuloModels(List<Articulo> articulo);

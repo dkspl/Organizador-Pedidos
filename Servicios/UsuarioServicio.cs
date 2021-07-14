@@ -134,13 +134,14 @@ namespace Servicios
             return ingreso;
         }
 
-        public void EliminarUsuario(int id)
+        public void EliminarUsuario(int id, int eliminadoPor)
         {
             Usuario usuarioEncontrado = _contexto.Usuarios.Find(id);
             if (usuarioEncontrado != null)
             {
                 usuarioEncontrado.FechaBorrado = DateTime.Now;
                 usuarioEncontrado.FechaModificacion = usuarioEncontrado.FechaBorrado;
+                usuarioEncontrado.BorradoPor = eliminadoPor;
                 _contexto.SaveChanges();
             }
         }

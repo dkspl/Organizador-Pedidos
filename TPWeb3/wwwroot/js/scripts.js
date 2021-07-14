@@ -29,7 +29,7 @@
                 }
             });
             if (flag == 0) {
-                $('#listaArticulos').append('<tr class="table-row div-articulo" id="' + $('#codArt option:selected').val() + '">\n<td>' + $('#codArt option:selected').text() + '</td>\n<td>' + $('#codArt option:selected').val() + '</td>\n<td id="Cantidad_' + $('#codArt option:selected').val() + '">' + $('#cantArt').val() + '</td>\n<td><button type="button" class="btn btn-success quitar">Quitar</button></td>\n<input type="hidden" id="Articulo_' + $('#codArt option:selected').val() + '" name="Articulos[' + $('#codArt option:selected').val() + ']" class="form-control articulo" value="' + $('#cantArt').val() + '"></tr>\n');
+                $('#listaArticulos').append('<tr class="table-row div-articulo" id="' + $('#codArt option:selected').val() + '">\n<td>' + $('#codArt option:selected').text() + '</td>\n<td>' + $('#codArt option:selected').val() + '</td>\n<td id="Cantidad_' + $('#codArt option:selected').val() + '">' + $('#cantArt').val() + '</td>\n<td><button type="button" class="btn btn-outline-warning quitar">Quitar</button></td>\n<input type="hidden" id="Articulo_' + $('#codArt option:selected').val() + '" name="Articulos[' + $('#codArt option:selected').val() + ']" class="form-control articulo" value="' + $('#cantArt').val() + '"></tr>\n');
             }
             $('.btnAct').removeAttr('disabled');
         }

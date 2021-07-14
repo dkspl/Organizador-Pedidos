@@ -36,13 +36,13 @@ namespace Servicios
             return articuloEncontrado;
         }
 
-        public void EliminarArticulo(int id)
+        public void EliminarArticulo(int id, int eliminadoPor)
         {
             Articulo articuloEncontrado = Contexto.Articulos.Find(id);
             if (articuloEncontrado != null)
             {
                 articuloEncontrado.FechaBorrado = DateTime.Now;
-                articuloEncontrado.FechaModificacion = articuloEncontrado.FechaBorrado;
+                articuloEncontrado.BorradoPor = eliminadoPor;
                 Contexto.SaveChanges();
             }
         }

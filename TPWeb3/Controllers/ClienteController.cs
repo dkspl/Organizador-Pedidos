@@ -6,6 +6,7 @@ using Servicios;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace TPWeb3.Controllers
@@ -47,6 +48,7 @@ namespace TPWeb3.Controllers
         {
             if (ModelState.IsValid)
             {
+                cliente.CreadoPor = Int32.Parse(HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Name)?.Value);
                 if (ClienteServicio.CrearCliente(cliente) == 1)
                 {
                     TempData["notificacion"] = cliente.Nombre;
@@ -67,12 +69,14 @@ namespace TPWeb3.Controllers
         [HttpPost]
         public IActionResult EliminarCliente(int id)
         {
-            ClienteServicio.EliminarCliente(id);
+            int eliminadoPor = Int32.Parse(HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Name)?.Value);
+            ClienteServicio.EliminarCliente(id, eliminadoPor);
             return RedirectToAction("Index");
         }
         [HttpPost]
         public IActionResult EditarCliente(Cliente cliente)
         {
+            cliente.ModificadoPor = Int32.Parse(HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Name)?.Value);
             ClienteServicio.EditarCliente(cliente);
             return Redirect("/Cliente/Detalle/" + cliente.IdCliente);
         }

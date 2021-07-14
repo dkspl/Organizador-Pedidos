@@ -14,7 +14,7 @@ namespace Servicios
         List<Cliente> ListarClientes();
         List<Cliente> ListarClientesConEliminados();
         Cliente EditarCliente(Cliente cliente);
-        void EliminarCliente(int id);
+        void EliminarCliente(int id, int eliminadoPor);
         Cliente BuscarCliente(int id);
         List<Cliente> ListarClientesSinPedidosActivos(List<Pedido> listaPedidosActivos);
         List<ClienteModel> ListarClienteModels(List<Cliente> cliente);

@@ -45,7 +45,7 @@ namespace Servicios
             return clienteEncontrado;
         }
 
-        public void EliminarCliente(int id)
+        public void EliminarCliente(int id, int eliminadoPor)
         {
             Cliente clienteEncontrado = Contexto.Clientes.Find(id);
             if (clienteEncontrado != null)

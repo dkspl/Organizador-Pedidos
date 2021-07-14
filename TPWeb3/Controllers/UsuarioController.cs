@@ -7,6 +7,7 @@ using Servicios.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace TPWeb3.Controllers
@@ -48,6 +49,7 @@ namespace TPWeb3.Controllers
         {
             if (ModelState.IsValid)
             {
+                usuario.CreadoPor = Int32.Parse(HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Name)?.Value);
                 if (_ServicioUsuario.CrearUsuario(usuario) == 1)
                 {
                     if (retorno == 0)
@@ -62,13 +64,15 @@ namespace TPWeb3.Controllers
         [HttpPost]
         public IActionResult EditarUsuario(Usuario usuario)
         {
+            usuario.ModificadoPor= Int32.Parse(HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Name)?.Value);
             _ServicioUsuario.EditarUsuario(usuario);
             return Redirect("/Usuario/Detalle/" + usuario.IdUsuario);
         }
         [HttpPost]
         public IActionResult EliminarUsuario(int id)
         {
-            _ServicioUsuario.EliminarUsuario(id);
+            int eliminadoPor = Int32.Parse(HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Name)?.Value);
+            _ServicioUsuario.EliminarUsuario(id, eliminadoPor);
             return RedirectToAction("Index");
         }
     }

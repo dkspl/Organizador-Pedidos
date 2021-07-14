@@ -10,7 +10,7 @@
         <div class="mt-2 mb-4 row">
             <div class="mt-4 col" id="inputFiltro">
                 <select name="cliente" class="custom-select js-example-basic-single" id="cliente">
-                    <option value="">todos los clientes</option>
+                    <option value="">Todos los clientes</option>
                     @foreach (var cliente in ViewBag.Clientes)
                     {
                         if (ViewBag.Cliente != null && cliente.IdCliente == ViewBag.Cliente)
@@ -27,7 +27,7 @@
             </div>
             <div class="mt-4 col">
                 <select name="estado" class="custom-select js-example-basic-single" id="estado">
-                    <option value="0">todos los estados</option>
+                    <option value="0">Todos los estados</option>
                     @foreach (var estado in ViewBag.Estados)
                     {
                         if (ViewBag.Estado != null && ViewBag.Estado != 0 && estado.IdEstadoPedido == ViewBag.Estado)
@@ -74,7 +74,12 @@
             <tr class="table-row">
                 <td>@pedido.IdClienteNavigation.Nombre - # @pedido.NroPedido</td>
                 <td>@pedido.IdEstadoNavigation.Descripcion</td>
-                <td>@pedido.FechaModificacion</td>
+                <td>@pedido.FechaModificacion
+                @if (pedido.ModificadoPor != null)
+                {
+                    <strong>(@pedido.ModificadoPorNavigation.Apellido @pedido.ModificadoPorNavigation.Nombre)</strong>
+                }
+                </td>
                 <td><a class="btn btn-warning" href="/Pedido/Detalle/@pedido.IdPedido">Ver</a></td>
             </tr>
             }

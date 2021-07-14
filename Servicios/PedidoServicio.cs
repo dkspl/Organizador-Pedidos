@@ -56,6 +56,7 @@ namespace Servicios
                 pedidoEncontrado.IdCliente = pedido.IdCliente;
                 pedidoEncontrado.Comentarios = pedido.Comentarios;
                 pedidoEncontrado.FechaModificacion = DateTime.Now;
+                pedidoEncontrado.ModificadoPor = pedido.ModificadoPor;
                 pedidoEncontrado.PedidoArticulos = this.EditarArticulosDeUnPedido(pedido.PedidoArticulos.ToList(), pedido.IdPedido);
                 Contexto.SaveChanges();
             }
@@ -137,33 +138,38 @@ namespace Servicios
             return listaPedidos;
         }
 
-        public void EliminarPedido(int idPedido)
+        public void EliminarPedido(int idPedido, int eliminadoPor)
         {
             Pedido pedidoEncontrado = this.BuscarPedido(idPedido);
             if (pedidoEncontrado != null)
             {
+                this.CerrarPedido(idPedido, eliminadoPor);
                 pedidoEncontrado.FechaBorrado = DateTime.Now;
-                this.CerrarPedido(idPedido);
+                pedidoEncontrado.BorradoPor = eliminadoPor;
                 Contexto.SaveChanges();
             }      
         }
 
-        public void CerrarPedido(int idPedido)
+        public void CerrarPedido(int idPedido, int modificadoPor)
         {
             Pedido pedidoEncontrado = this.BuscarPedido(idPedido);
             if (pedidoEncontrado != null)
             {
                 pedidoEncontrado.IdEstadoNavigation = this.BuscarEstadoPedidoPorDescripcion("Cerrado");
+                pedidoEncontrado.FechaModificacion = DateTime.Now;
+                pedidoEncontrado.ModificadoPor = modificadoPor;
                 Contexto.SaveChanges();
             }
         }
 
-        public void EntregarPedido(int idPedido)
+        public void EntregarPedido(int idPedido, int modificadoPor)
         {
             Pedido pedidoEncontrado = this.BuscarPedido(idPedido);
             if (pedidoEncontrado != null)
             {
                 pedidoEncontrado.IdEstadoNavigation = this.BuscarEstadoPedidoPorDescripcion("Entregado");
+                pedidoEncontrado.FechaModificacion = DateTime.Now;
+                pedidoEncontrado.ModificadoPor = modificadoPor;
                 Contexto.SaveChanges();
             }
         }
