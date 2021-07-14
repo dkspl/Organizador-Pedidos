@@ -27,23 +27,27 @@
                 <tr>
                     <th scope="col">Descripción</th>
                     <th scope="col">Código</th>
-                    <th scope="col">Ver</th>
-                    <th scope="col">Eliminar</th>
+                    <th scope="col">Acciones</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var articulo in Model)
                 {
-                    <tr class="table-row">
-                        <td>@articulo.Descripcion</td>
-                        <td>@articulo.Codigo </td>
-                        <td><a class="btn btn-success" href="/Articulo/Detalle/@articulo.IdArticulo">Ver</a></td>
-                        <td>
-                            <button type="button" onclick="addIdTo('@articulo.IdArticulo','articuloPorBorrar')" class="btn btn-outline-success" data-toggle="modal" data-target="#eliminar">
+                <tr class="table-row">
+                    <td>@articulo.Descripcion</td>
+                    <td>@articulo.Codigo </td>
+                    <td>
+                        <a class="btn btn-success" href="/Articulo/Detalle/@articulo.IdArticulo">Ver</a>
+                        @if (articulo.FechaBorrado != null)
+                        {
+
+                            <button type="button" onclick="addIdTo('@articulo.IdArticulo','articuloPorBorrar')" class="btn btn-outline-success ml-4" data-toggle="modal" data-target="#eliminar">
                                 Eliminar
                             </button>
-                        </td>
-                    </tr>
+
+                        }
+                    </td>
+                </tr>
                 }
             </tbody>
         </table>
