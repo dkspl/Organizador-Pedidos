@@ -1,3 +1,4 @@
+using AspNetCoreHero.ToastNotification;
 using Entidades.Entidades;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -50,6 +51,11 @@ namespace TPWeb3
             {
                 options.Cookie.Name = "OrganizaTusPedidos";
                 options.IdleTimeout = TimeSpan.FromSeconds(60);
+            });
+            services.AddNotyf(config => { 
+                config.DurationInSeconds = 10; 
+                config.IsDismissable = true; 
+                config.Position = NotyfPosition.BottomRight; 
             });
         }
 

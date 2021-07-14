@@ -1,4 +1,5 @@
 ﻿using Entidades.Entidades;
+using Entidades.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -164,6 +165,54 @@ namespace Servicios
         public EstadoPedido BuscarEstadoPedidoPorDescripcion(string valor)
         {
             return Contexto.EstadoPedidos.Where(ep => ep.Descripcion.Equals(valor)).FirstOrDefault();
+        }
+
+        public List<PedidoModel> ListarPedidoModels(int? cliente, int? estado, string incluir)
+        {
+            List<Pedido> listaPedidos = this.ListarPedidos(cliente, estado, incluir);
+            List<PedidoModel> listaPedidosModel = new List<PedidoModel>();
+            foreach (Pedido pedido in listaPedidos)
+            {
+                PedidoModel nuevoPedido = new PedidoModel()
+                {
+                    IdPedido = pedido.IdPedido,
+                    IdCliente = pedido.IdCliente,
+                    Estado = pedido.IdEstadoNavigation.Descripcion,
+                    FechaModificacion = pedido.FechaModificacion
+                };
+                if (pedido.ModificadoPorNavigation != null)
+                {
+                    nuevoPedido.ModificadoPor = new UsuarioModel()
+                    {
+                        Email = pedido.ModificadoPorNavigation.Email,
+                        Nombre = pedido.ModificadoPorNavigation.Nombre,
+                        Apellido = pedido.ModificadoPorNavigation.Apellido,
+                        IdUsuario = pedido.ModificadoPorNavigation.IdUsuario.ToString(),
+                        FechaNacimiento = pedido.ModificadoPorNavigation.FechaNacimiento
+                    };
+                }
+                
+                nuevoPedido.Articulos = this.ListarArticulosConCantidades(pedido.PedidoArticulos.ToList());
+                listaPedidosModel.Add(nuevoPedido);
+            }
+            return listaPedidosModel;
+        }
+
+        public List<ArticuloCantidadModel> ListarArticulosConCantidades(List<PedidoArticulo> articulos)
+        {
+            List<ArticuloCantidadModel> listaModel = new List<ArticuloCantidadModel>();
+            foreach (PedidoArticulo articulo in articulos)
+            {
+                ArticuloCantidadModel articuloModel = new ArticuloCantidadModel()
+                {
+                    IdArticulo = articulo.IdArticulo,
+                    Codigo = articulo.IdArticuloNavigation.Codigo,
+                    Descripcion = articulo.IdArticuloNavigation.Descripcion,
+                    Cantidad = articulo.Cantidad
+                };
+                listaModel.Add(articuloModel);
+            }
+            return listaModel;
         }
     }
 }

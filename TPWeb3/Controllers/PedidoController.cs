@@ -1,4 +1,5 @@
-﻿using Entidades.Entidades;
+﻿using AspNetCoreHero.ToastNotification.Abstractions;
+using Entidades.Entidades;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Servicios;
@@ -16,12 +17,14 @@ namespace TPWeb3.Controllers
         private IPedidoServicio PedidoServicio;
         private IArticuloServicio ArticuloServicio;
         private IClienteServicio ClienteServicio;
+        private readonly INotyfService _notyf;
 
-        public PedidoController(_20211CTPContext contexto)
+        public PedidoController(_20211CTPContext contexto, INotyfService notyf)
         {
             PedidoServicio = new PedidoServicio(contexto);
             ArticuloServicio = new ArticuloServicio(contexto);
             ClienteServicio = new ClienteServicio(contexto);
+            _notyf = notyf;
         }
         public IActionResult Index(int? cliente, int? estado, string incluir)
         {
@@ -44,6 +47,10 @@ namespace TPWeb3.Controllers
             ViewBag.Articulos = ArticuloServicio.ListarArticulos();
             ViewBag.ErrorCliente = TempData["ErrorCliente"];
             ViewBag.ErrorArticulo = TempData["ErrorArticulo"];
+            if(TempData["notificacion"] != null)
+            {
+                _notyf.Success("Pedido creado");
+            }
             return View();
         }
         [HttpPost]
@@ -62,7 +69,11 @@ namespace TPWeb3.Controllers
                         if (retorno == 0)
                             return RedirectToAction("Index");
                         else
+                        {
+                            TempData["notificacion"] = 1;
                             return RedirectToAction("NuevoPedido");
+                        }
+                            
                     }
                     else
                     {

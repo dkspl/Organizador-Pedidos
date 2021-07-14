@@ -36,12 +36,12 @@ namespace Servicios
             return null;
         }
 
-        public UsuarioResponse IniciarSesion(string email, string password)
+        public UsuarioResponseModel IniciarSesion(string email, string password)
         {
             Usuario usuarioEncontrado = this.ValidarUsuario(email, password);
             if(usuarioEncontrado!= null)
             {
-                UsuarioResponse usuario = new UsuarioResponse()
+                UsuarioResponseModel usuario = new UsuarioResponseModel()
                 {
                     email = usuarioEncontrado.Email,
                     id = usuarioEncontrado.IdUsuario.ToString(),
@@ -53,12 +53,12 @@ namespace Servicios
             }
             return null;
         }
-        public UsuarioModel IniciarSesionAPI(string email, string password)
+        public UsuarioLogueadoModel IniciarSesionAPI(string email, string password)
         {
             Usuario usuarioEncontrado = this.ValidarUsuario(email, password);
             if (usuarioEncontrado != null)
             {
-                UsuarioModel usuario = new UsuarioModel()
+                UsuarioLogueadoModel usuario = new UsuarioLogueadoModel()
                 {
                     Email = usuarioEncontrado.Email,
                     IdUsuario = usuarioEncontrado.IdUsuario.ToString(),

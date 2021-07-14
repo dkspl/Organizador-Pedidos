@@ -1,4 +1,5 @@
 ﻿using Entidades.Entidades;
+using Entidades.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,5 +22,7 @@ namespace Servicios
         void CerrarPedido(int idPedido);
         void EntregarPedido(int idPedido);
         List<Pedido> ListarPedidos(int? cliente, int? estado, string incluir);
+        List<PedidoModel> ListarPedidoModels(int? cliente, int? estado, string incluir);
+        List<ArticuloCantidadModel> ListarArticulosConCantidades(List<PedidoArticulo> articulos);
     }
 }

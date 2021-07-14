@@ -1,4 +1,5 @@
-﻿using Entidades.Entidades;
+﻿using AspNetCoreHero.ToastNotification.Abstractions;
+using Entidades.Entidades;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Servicios;
@@ -13,13 +14,19 @@ namespace TPWeb3.Controllers
     public class ArticuloController : Controller
     {
         private IArticuloServicio ArticuloServicio;
+        private readonly INotyfService _notyf;
 
-        public ArticuloController(_20211CTPContext contexto)
+        public ArticuloController(_20211CTPContext contexto, INotyfService notyf)
         {
             ArticuloServicio = new ArticuloServicio(contexto);
+            _notyf = notyf;
         }
         public IActionResult Index(string incluir)
         {
+            if (TempData["notificacion"] != null)
+            {
+                _notyf.Success("El artículo " + TempData["notificacion"] + " se ha creado con éxito.");
+            }
             ViewBag.Incluir = incluir;
             if (!string.IsNullOrEmpty(incluir) && incluir.Equals("on"))
             {
@@ -29,6 +36,10 @@ namespace TPWeb3.Controllers
         }
         public IActionResult NuevoArticulo()
         {
+            if (TempData["notificacion"] != null)
+            {
+                _notyf.Success("El artículo " + TempData["notificacion"] + " se ha creado con éxito.");
+            }
             return View();
         }
         [HttpPost]
@@ -36,8 +47,9 @@ namespace TPWeb3.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (ArticuloServicio.CrearArticulo(articulo) == 1)
+                if (ArticuloServicio.CrearArticulo(articulo) != null)
                 {
+                    TempData["notificacion"] = articulo.Codigo+"-"+articulo.Descripcion;
                     if (retorno == 0)
                         return RedirectToAction("Index");
                     else

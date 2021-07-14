@@ -10,7 +10,7 @@ namespace Servicios
 {
     public interface IArticuloServicio
     {
-        int CrearArticulo(Articulo articulo);
+        Articulo CrearArticulo(Articulo articulo);
         List<Articulo> ListarArticulos();
         List<Articulo> ListarArticulosConEliminados();
         Articulo EditarArticulo(Articulo articulo);

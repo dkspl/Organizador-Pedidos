@@ -18,8 +18,8 @@ namespace Servicios
         Usuario EditarUsuario(Usuario usuario);
         Usuario BuscarUsuario(int id);
         void EliminarUsuario(int id);
-        UsuarioResponse IniciarSesion(string email, string password);
-        UsuarioModel IniciarSesionAPI(string email, string password);
+        UsuarioResponseModel IniciarSesion(string email, string password);
+        UsuarioLogueadoModel IniciarSesionAPI(string email, string password);
         void CerrarSesion();
     }
 }

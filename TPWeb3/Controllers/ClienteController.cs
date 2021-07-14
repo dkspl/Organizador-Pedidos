@@ -1,4 +1,5 @@
-﻿using Entidades.Entidades;
+﻿using AspNetCoreHero.ToastNotification.Abstractions;
+using Entidades.Entidades;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Servicios;
@@ -13,14 +14,20 @@ namespace TPWeb3.Controllers
     public class ClienteController : Controller
     {
         private IClienteServicio ClienteServicio;
+        private readonly INotyfService _notyf;
 
-        public ClienteController(_20211CTPContext contexto)
+        public ClienteController(_20211CTPContext contexto, INotyfService notyf)
         {
             ClienteServicio = new ClienteServicio(contexto);
+            _notyf = notyf;
         }
         public IActionResult Index(string incluir)
         {
             ViewBag.Incluir = incluir;
+            if (TempData["notificacion"] != null)
+            {
+                _notyf.Success("El cliente " + TempData["notificacion"] + " se ha creado con éxito.");
+            }
             if (!string.IsNullOrEmpty(incluir) && incluir.Equals("on"))
             {
                 return View(ClienteServicio.ListarClientesConEliminados());
@@ -29,6 +36,10 @@ namespace TPWeb3.Controllers
         }
         public IActionResult NuevoCliente()
         {
+            if(TempData["notificacion"] != null)
+            {
+                _notyf.Success("El cliente " + TempData["notificacion"] + " se ha creado con éxito.");
+            }
             return View();
         }
         [HttpPost]
@@ -38,6 +49,7 @@ namespace TPWeb3.Controllers
             {
                 if (ClienteServicio.CrearCliente(cliente) == 1)
                 {
+                    TempData["notificacion"] = cliente.Nombre;
                     if (retorno == 0)
                         return RedirectToAction("Index");
                     else

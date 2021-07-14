@@ -1,4 +1,5 @@
-﻿using Entidades;
+﻿using AspNetCoreHero.ToastNotification.Abstractions;
+using Entidades;
 using Entidades.Entidades;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -19,10 +20,12 @@ namespace TPWeb3.Controllers
     public class HomeController : Controller
     {
         private IUsuarioServicio UsuarioServicio;
+        private readonly INotyfService _notyf;
 
-        public HomeController(_20211CTPContext contexto, IJwtHelper jwtHelper, IHttpContextAccessor httpContextAccessor)
+        public HomeController(_20211CTPContext contexto, IJwtHelper jwtHelper, IHttpContextAccessor httpContextAccessor, INotyfService notyf)
         {
             UsuarioServicio = new UsuarioServicio(contexto, jwtHelper,httpContextAccessor);
+            _notyf = notyf;
         }
 
         [AllowAnonymous]
@@ -41,7 +44,7 @@ namespace TPWeb3.Controllers
         {
             if (ModelState.IsValid)
             {
-                UsuarioResponse usuarioValidado=UsuarioServicio.IniciarSesion(usuario.Email, usuario.Password);
+                UsuarioResponseModel usuarioValidado=UsuarioServicio.IniciarSesion(usuario.Email, usuario.Password);
                 if (usuarioValidado != null)
                 {
                     return Redirect("/Pedido");

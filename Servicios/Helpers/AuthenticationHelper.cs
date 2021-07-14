@@ -13,7 +13,7 @@ namespace Servicios.Helpers
 {
     public static class AuthenticationHelper
     {
-        public static async void SignIn(HttpContext httpContext, UsuarioResponse usuario)
+        public static async void SignIn(HttpContext httpContext, UsuarioResponseModel usuario)
         {
             var claims = new List<Claim>
             {

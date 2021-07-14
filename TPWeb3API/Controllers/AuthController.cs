@@ -25,9 +25,9 @@ namespace TPWeb3API.Controllers
         }
         [Route("Login")]
         [HttpPost]
-        public UsuarioModel Login(UsuarioVM usuario)
+        public UsuarioLogueadoModel Login(UsuarioVM usuario)
         {
-            UsuarioModel usuarioValidado = UsuarioServicio.IniciarSesionAPI(usuario.Email, usuario.Password);
+            UsuarioLogueadoModel usuarioValidado = UsuarioServicio.IniciarSesionAPI(usuario.Email, usuario.Password);
             return usuarioValidado;
         }
     }

@@ -16,12 +16,14 @@ namespace Servicios
         {
             Contexto = dBContext;
         }
-        public int CrearArticulo(Articulo articulo)
+        public Articulo CrearArticulo(Articulo articulo)
         {
             articulo.FechaCreacion = DateTime.Now;
             Contexto.Articulos.Add(articulo);
             int ingreso = Contexto.SaveChanges();
-            return ingreso;
+            if (ingreso == 1)
+                return articulo;
+            return null;
         }
 
         public Articulo EditarArticulo(Articulo articulo)
