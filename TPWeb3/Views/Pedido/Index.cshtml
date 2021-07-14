@@ -1,5 +1,13 @@
 ﻿@model List<Entidades.Entidades.Pedido>
-<partial name="_Navbar" />
+@if (!string.IsNullOrEmpty(ViewBag.EsAdmin))
+{
+    <partial name="_NavbarAdmin" />
+}
+else
+{
+    <partial name="_Navbar" />
+}
+
 <script src="~/js/scripts.js"></script>
 <div class="container mt-4">
     <h2>Pedidos</h2>
@@ -71,18 +79,19 @@
         <tbody>
             @foreach (var pedido in Model)
             {
-            <tr class="table-row">
-                <td>@pedido.IdClienteNavigation.Nombre - # @pedido.NroPedido</td>
-                <td>@pedido.IdEstadoNavigation.Descripcion</td>
-                <td>@pedido.FechaModificacion
-                @if (pedido.ModificadoPor != null)
-                {
-                    <strong>(@pedido.ModificadoPorNavigation.Apellido @pedido.ModificadoPorNavigation.Nombre)</strong>
-                }
+                <tr class="table-row">
+                    <td>@pedido.IdClienteNavigation.Nombre - # @pedido.NroPedido</td>
+                    <td>@pedido.IdEstadoNavigation.Descripcion</td>
+                    <td>
+                        @pedido.FechaModificacion
+                    @if (pedido.ModificadoPor != null)
+                    {
+                        <strong>(@pedido.ModificadoPorNavigation.Apellido @pedido.ModificadoPorNavigation.Nombre)</strong>
+                    }
                 </td>
                 <td><a class="btn btn-warning" href="/Pedido/Detalle/@pedido.IdPedido">Ver</a></td>
             </tr>
-            }
+        }
         </tbody>
     </table>
 </div>

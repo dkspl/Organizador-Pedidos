@@ -1,51 +1,51 @@
 ﻿@model List<Entidades.Entidades.Articulo>
-<partial name="_Navbar" />
+    <partial name="_NavbarAdmin" />
 
-<div class="container mt-4">
-    <partial name="_ModalArticulo" />
-    <h2>Artículos</h2>
-    <div class="d-grid gap-2 mt-4">
-        <a href="/Articulo/NuevoArticulo" class="btn btn-success">Crear nuevo artículo</a>
-    </div>
-    <div class="mt-4 mb-4">
-        <form method="get" asp-controller="Articulo" asp-action="Index" id="formCambio">
-            <div class="form-check form-switch">
-                @if (!string.IsNullOrEmpty(ViewBag.Incluir) && ViewBag.Incluir.Equals("on"))
-                {
-                    <input class="form-check-input" name="incluir" type="checkbox" id="incluir" checked>
-                }
-                else
-                {
-                    <input class="form-check-input" name="incluir" type="checkbox" id="incluir">
-                }
-                <label for="incluir" class="form-check-label">Incluir eliminados</label>
-            </div>
-        </form>
-    </div>
-    <table class="table table-hover mt-4" id="lista">
-        <thead>
-            <tr>
-                <th scope="col">Descripción</th>
-                <th scope="col">Código</th>
-                <th scope="col">Ver</th>
-                <th scope="col">Eliminar</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var articulo in Model)
-            {
-                <tr class="table-row">
-                    <td>@articulo.Descripcion</td>
-                    <td>@articulo.Codigo </td>
-                    <td><a class="btn btn-success" href="/Articulo/Detalle/@articulo.IdArticulo">Ver</a></td>
-                    <td>
-                        <button type="button" onclick="addIdTo('@articulo.IdArticulo','articuloPorBorrar')" class="btn btn-outline-success" data-toggle="modal" data-target="#eliminar">
-                            Eliminar
-                        </button>
-                    </td>
+    <div class="container mt-4">
+        <partial name="_ModalArticulo" />
+        <h2>Artículos</h2>
+        <div class="d-grid gap-2 mt-4">
+            <a href="/Articulo/NuevoArticulo" class="btn btn-success">Crear nuevo artículo</a>
+        </div>
+        <div class="mt-4 mb-4">
+            <form method="get" asp-controller="Articulo" asp-action="Index" id="formCambio">
+                <div class="form-check form-switch">
+                    @if (!string.IsNullOrEmpty(ViewBag.Incluir) && ViewBag.Incluir.Equals("on"))
+                    {
+                        <input class="form-check-input" name="incluir" type="checkbox" id="incluir" checked>
+                    }
+                    else
+                    {
+                        <input class="form-check-input" name="incluir" type="checkbox" id="incluir">
+                    }
+                    <label for="incluir" class="form-check-label">Incluir eliminados</label>
+                </div>
+            </form>
+        </div>
+        <table class="table table-hover mt-4" id="lista">
+            <thead>
+                <tr>
+                    <th scope="col">Descripción</th>
+                    <th scope="col">Código</th>
+                    <th scope="col">Ver</th>
+                    <th scope="col">Eliminar</th>
                 </tr>
-            }
-        </tbody>
-    </table>
-</div>
-<script src="~/js/scripts.js"></script>
+            </thead>
+            <tbody>
+                @foreach (var articulo in Model)
+                {
+                    <tr class="table-row">
+                        <td>@articulo.Descripcion</td>
+                        <td>@articulo.Codigo </td>
+                        <td><a class="btn btn-success" href="/Articulo/Detalle/@articulo.IdArticulo">Ver</a></td>
+                        <td>
+                            <button type="button" onclick="addIdTo('@articulo.IdArticulo','articuloPorBorrar')" class="btn btn-outline-success" data-toggle="modal" data-target="#eliminar">
+                                Eliminar
+                            </button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <script src="~/js/scripts.js"></script>

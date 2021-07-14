@@ -1,5 +1,13 @@
 ﻿@model Entidades.Entidades.Pedido
-<partial name="_Navbar" />
+@if (!string.IsNullOrEmpty(ViewBag.EsAdmin))
+{
+    <partial name="_NavbarAdmin" />
+}
+else
+{
+    <partial name="_Navbar" />
+}
+
 
 <div class="container">
     <h2 class="mt-4">Crear nuevo pedido</h2>

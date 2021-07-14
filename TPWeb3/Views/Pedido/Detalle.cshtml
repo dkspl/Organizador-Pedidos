@@ -1,5 +1,12 @@
 ﻿@model Entidades.Entidades.Pedido
-<partial name="_Navbar" />
+@if (!string.IsNullOrEmpty(ViewBag.EsAdmin))
+{
+    <partial name="_NavbarAdmin" />
+}
+else
+{
+    <partial name="_Navbar" />
+}
 <script src="~/js/Scripts.js"></script>
 <partial name="_ModalCerrar" />
 <partial name="_ModalEliminar" />

@@ -1,42 +1,42 @@
 ﻿@model Entidades.Entidades.Cliente
-<partial name="_Navbar" />
-<div class="container">
-    <h2 class="mt-4">Crear nuevo cliente</h2>
-    <form method="post" asp-controller="Cliente" asp-action="NuevoCliente">
-        <fieldset>
-            <div class="form-group">
-                <label asp-for="@Model.Nombre" class="form-label mt-4">Nombre</label>
-                <input asp-for="@Model.Nombre" class="form-control" placeholder="Nombre">
-                <span asp-validation-for="@Model.Nombre" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="@Model.Numero" class="form-label mt-2">Número</label>
-                <input asp-for="@Model.Numero" class="form-control" placeholder="Número">
-            </div>
-            <div class="form-group">
-                <label asp-for="@Model.Cuit" class="form-label mt-2">CUIT (opcional)</label>
-                <input asp-for="@Model.Cuit" class="form-control" placeholder="CUIT">
-                <span asp-validation-for="@Model.Cuit" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="@Model.Email" class="form-label mt-2">Email (opcional)</label>
-                <input asp-for="@Model.Email" class="form-control" placeholder="Email">
-                <span asp-validation-for="@Model.Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="@Model.Telefono" class="form-label mt-2">Teléfono (opcional)</label>
-                <input asp-for="@Model.Telefono" class="form-control" placeholder="Teléfono">
-            </div>
-            <div class="form-group">
-                <label asp-for="@Model.Direccion" class="form-label mt-2">Dirección (opcional)</label>
-                <input asp-for="@Model.Direccion" class="form-control" placeholder="Dirección">
-                <span asp-validation-for="@Model.Direccion" class="text-danger"></span>
-            </div>
-            <input type="hidden" value="" name="retorno" id="retorno" />
-            <a href="/Cliente" class="btn btn-outline-info mt-2">Cancelar</a>
-            <button type="submit" class="btn btn-info mt-2 ml-2" id="guardar">Guardar cliente</button>
-            <button type="submit" class="btn btn-info mt-2 ml-2" id="guardarycrear">Guardar y crear otro</button>
-        </fieldset>
-    </form>
-</div>
-<script src="~/js/Scripts.js"></script>
+    <partial name="_NavbarAdmin" />
+    <div class="container">
+        <h2 class="mt-4">Crear nuevo cliente</h2>
+        <form method="post" asp-controller="Cliente" asp-action="NuevoCliente">
+            <fieldset>
+                <div class="form-group">
+                    <label asp-for="@Model.Nombre" class="form-label mt-4">Nombre</label>
+                    <input asp-for="@Model.Nombre" class="form-control" placeholder="Nombre">
+                    <span asp-validation-for="@Model.Nombre" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="@Model.Numero" class="form-label mt-2">Número</label>
+                    <input asp-for="@Model.Numero" class="form-control" placeholder="Número">
+                </div>
+                <div class="form-group">
+                    <label asp-for="@Model.Cuit" class="form-label mt-2">CUIT (opcional)</label>
+                    <input asp-for="@Model.Cuit" class="form-control" placeholder="CUIT">
+                    <span asp-validation-for="@Model.Cuit" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="@Model.Email" class="form-label mt-2">Email (opcional)</label>
+                    <input asp-for="@Model.Email" class="form-control" placeholder="Email">
+                    <span asp-validation-for="@Model.Email" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="@Model.Telefono" class="form-label mt-2">Teléfono (opcional)</label>
+                    <input asp-for="@Model.Telefono" class="form-control" placeholder="Teléfono">
+                </div>
+                <div class="form-group">
+                    <label asp-for="@Model.Direccion" class="form-label mt-2">Dirección (opcional)</label>
+                    <input asp-for="@Model.Direccion" class="form-control" placeholder="Dirección">
+                    <span asp-validation-for="@Model.Direccion" class="text-danger"></span>
+                </div>
+                <input type="hidden" value="" name="retorno" id="retorno" />
+                <a href="/Cliente" class="btn btn-outline-info mt-2">Cancelar</a>
+                <button type="submit" class="btn btn-info mt-2 ml-2" id="guardar">Guardar cliente</button>
+                <button type="submit" class="btn btn-info mt-2 ml-2" id="guardarycrear">Guardar y crear otro</button>
+            </fieldset>
+        </form>
+    </div>
+    <script src="~/js/Scripts.js"></script>

@@ -39,6 +39,11 @@ namespace TPWeb3.Controllers
             {
                 _notyf.Success("El pedido " + TempData["notificacion"] + " se ha creado con éxito.");
             }
+            string esAdmin = HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role)?.Value;
+            if (esAdmin.Equals("Administrador"))
+            {
+                ViewBag.EsAdmin = "1";
+            }
             return View(PedidoServicio.ListarPedidos(cliente, estado, incluir));
         }
         public IActionResult NuevoPedido()
@@ -51,6 +56,11 @@ namespace TPWeb3.Controllers
             if (TempData["notificacion"] != null)
             {
                 _notyf.Success("El pedido " + TempData["notificacion"] + " se ha creado con éxito.");
+            }
+            string esAdmin = HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role)?.Value;
+            if (esAdmin.Equals("Administrador"))
+            {
+                ViewBag.EsAdmin = "1";
             }
             return View();
         }
@@ -95,6 +105,11 @@ namespace TPWeb3.Controllers
                 ViewBag.Articulos = ArticuloServicio.ListarArticulos();
                 ViewBag.ErrorArticulo = TempData["ErrorArticulo"];
                 ViewBag.EstadoPedido = PedidoServicio.ListarEstadosPedido();
+                string esAdmin = HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role)?.Value;
+                if (esAdmin.Equals("Administrador"))
+                {
+                    ViewBag.EsAdmin = "1";
+                }
                 return View(pedidoEncontrado);
             }
             return RedirectToAction("Index");
