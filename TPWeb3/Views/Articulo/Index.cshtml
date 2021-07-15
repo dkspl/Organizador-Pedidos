@@ -38,7 +38,7 @@
                     <td>@articulo.Codigo </td>
                     <td>
                         <a class="btn btn-success" href="/Articulo/Detalle/@articulo.IdArticulo">Ver</a>
-                        @if (articulo.FechaBorrado != null)
+                        @if (articulo.FechaBorrado == null)
                         {
 
                             <button type="button" onclick="addIdTo('@articulo.IdArticulo','articuloPorBorrar')" class="btn btn-outline-success ml-4" data-toggle="modal" data-target="#eliminar">
